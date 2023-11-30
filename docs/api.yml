@@ -6,7 +6,7 @@ info:
 servers:
   - url: https://wallet-by-HEI/v1
 paths:
-  /test:
+  /account:
     get:
       responses:
         '200':
