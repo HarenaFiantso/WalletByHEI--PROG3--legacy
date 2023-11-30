@@ -29,7 +29,7 @@ To use this API locally, follow these steps:
 
 1. Clone this repository
 ```bash
-    git clone <Eto avy eo no ametrahana ny URL ny repository>
+    git clone https://github.com/HarenaFiantso/WalletByHEI--PROG3.git
 ```
 2. Ensure you have installed Java JDK and PostgreSQL database server
 3. Configure the database details
