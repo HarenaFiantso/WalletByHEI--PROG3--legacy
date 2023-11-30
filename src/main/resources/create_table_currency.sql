@@ -1,5 +1,5 @@
 -- Create the currency table if not exists
-CREATE TABLE currency IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS currency (
     currency_id SERIAL PRIMARY KEY,
     currency_name VARCHAR(50) NOT NULL
 );
