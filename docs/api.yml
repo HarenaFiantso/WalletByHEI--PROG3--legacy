@@ -5,7 +5,7 @@ info:
     This project consists of a Java API for managing accounts, transactions, and currencies for a financial management
     application. It uses Java for the backend, a PostgreSQL database to store the data, and exposes endpoints to interact
     with this data
-  version: '1.0'
+  version: '1.1'
 servers:
   - url: https://wallet-by-HEI/v1
 paths:
@@ -23,12 +23,37 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Currency'
-        '400':
+        '404':
           description: Currencies not found
           content:
             application.json:
               example:
                 message: 'No currencies found in the System'
+    post:
+      summary: Add a new currency
+      description: Add a new currency to the System
+      operationId: addCurrency
+      requestBody:
+        required: true
+        content:
+          application.json:
+            schema:
+              $ref: '#/components/schemas/NewCurrency'
+      responses:
+        '201':
+          description: Currency added successfully
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              example:
+                message: 'Invalid currency data provided'
+        '409':
+          description: Currency already exists
+          content:
+            application/json:
+              example:
+                message: 'Currency with the provided name already exists'
 components:
   schemas:
     Currency:
@@ -41,3 +66,9 @@ components:
         currency_name:
           type: string
           description: The name of the currency
+    NewCurrency:
+      type: object
+      properties:
+        currency_name:
+          type: string
+          description: The name of the new currency
