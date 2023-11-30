@@ -18,7 +18,7 @@ paths:
         '200':
           description: A list of currencies
           content:
-            application.json:
+            application/json:
               schema:
                 type: array
                 items:
@@ -26,7 +26,7 @@ paths:
         '404':
           description: Currencies not found
           content:
-            application.json:
+            application/json:
               example:
                 message: 'No currencies found in the System'
     post:
@@ -36,7 +36,7 @@ paths:
       requestBody:
         required: true
         content:
-          application.json:
+          application/json:
             schema:
               $ref: '#/components/schemas/NewCurrency'
       responses:
@@ -74,6 +74,31 @@ paths:
             application/json:
               example:
                 message: 'No accounts found in the system'
+    post:
+      summary: Create a new account
+      description: Create a new user account
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAccount'
+      responses:
+        '201':
+          description: A list of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: No accounts found
+          content:
+            application/json:
+              example:
+                message: 'No accounts found in the system'
 components:
   schemas:
     Currency:
@@ -81,7 +106,6 @@ components:
       properties:
         currency_id:
           type: integer
-          format: int64
           description: The unique identifier for the currency
         currency_name:
           type: string
@@ -97,19 +121,37 @@ components:
       properties:
         account_id:
           type: integer
-          description: The unique identifier for the account.
+          description: The unique identifier for the account
         first_name:
           type: string
-          description: The first name of the account holder.
+          description: The first name of the account holder
         last_name:
           type: string
-          description: The last name of the account holder.
+          description: The last name of the account holder
         password:
           type: string
-          description: The password for the account.
+          description: The password for the account
         balance:
           type: number
-          description: The current balance in the account.
+          description: The current balance in the account
         currency_id:
           type: integer
-          description: The ID of the currency associated with the account.
+          description: The ID of the currency associated with the account
+    NewAccount:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The first name of the new account holder.
+        last_name:
+          type: string
+          description: The last name of the new account holder.
+        password:
+          type: string
+          description: The password for the new account.
+        balance:
+          type: number
+          description: The initial balance for the new account.
+        currency_id:
+          type: integer
+          description: The ID of the currency associated with the new account.
