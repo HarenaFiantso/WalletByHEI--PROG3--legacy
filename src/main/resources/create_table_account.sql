@@ -1,5 +1,5 @@
 -- Create the account table if not exists
-CREATE TABLE account IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS account (
     account_id SERIAL PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
