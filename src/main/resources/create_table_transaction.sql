@@ -1,5 +1,5 @@
 -- Create the transaction table if not exists
-CREATE TABLE "transaction" IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS "transaction" (
     transaction_id SERIAL PRIMARY KEY,
     transaction_date DATE NOT NULL,
     amount DECIMAL(15, 2) NOT NULL,
