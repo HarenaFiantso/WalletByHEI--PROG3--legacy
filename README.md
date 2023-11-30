@@ -17,6 +17,8 @@ This project consists of a Java API for managing accounts, transactions, and cur
 application. It uses Java for the backend, a PostgreSQL database to store the data, and exposes endpoints to interact
 with this data
 
+![Wallet By HEI MCD](WalletByHEI.png)
+
 ## Features
 - Creation, retrieval, updating accounts
 - Addition, retrieval and management of transactions associated with accounts
