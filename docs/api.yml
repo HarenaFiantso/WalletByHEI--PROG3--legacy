@@ -22,6 +22,20 @@ paths:
         - Currencies
       summary: Retrieve all currencies
       description: Retrieve a list of available currencies
+      parameters:
+        - name: page
+          in: query
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: page_size
+          in: query
+          schema:
+            $ref: '#/components/schemas/PageSize'
+        - name: currency_name
+          in: query
+          description: 'Filter currencies by name, case is ignored'
+          schema:
+            type: string
       operationId: getAllCurrencies
       responses:
         '200':
@@ -29,9 +43,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Currency'
+                $ref: '#/components/schemas/Currency'
         '404':
           description: Currencies not found
           content:
@@ -71,6 +83,25 @@ paths:
         - Accounts
       summary: Retrieve all accounts
       description: Retrieve a list of all user accounts
+      parameters:
+        - name: page
+          in: query
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: page_size
+          in: query
+          schema: 
+            $ref: '#/components/schemas/PageSize'
+        - name: first_name
+          in: query
+          description: 'Filter account by first_name, case is ignored'
+          schema: 
+            type: string
+        - name: last_name
+          in: query
+          description: 'Filter account by last_name, case is ignored'
+          schema: 
+            type: string
       operationId: getAllAccount
       responses:
         '200':
@@ -306,15 +337,21 @@ components:
         account_id:
           type: integer
           description: The ID of the account associated with the new transaction.
+    Page:
+      type: integer
+      description: Start at `1`
+    PageSize:
+      type: integer
+      description: Cannot exceed `500`
   responses:
     Success200:
       description: OK
       content:
         application/json:
-          schema: 
+          schema:
             type: array
             items:
-              $ref: '#/components/schemas/{schema}'
+              $ref: '#/components/schemas/Currency'
             properties:
               message:
                 type: string
