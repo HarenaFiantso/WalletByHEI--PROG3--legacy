@@ -5,7 +5,7 @@ info:
     This project consists of a Java API for managing accounts, transactions, and currencies for a financial management
     application. It uses Java for the backend, a PostgreSQL database to store the data, and exposes endpoints to interact
     with this data
-  version: '1.3'
+  version: 'latest'
 servers:
   - url: https://wallet-by-HEI/v1
 tags:
