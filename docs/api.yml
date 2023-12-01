@@ -8,9 +8,18 @@ info:
   version: '1.3'
 servers:
   - url: https://wallet-by-HEI/v1
+tags:
+  - name: Currencies
+    description: Endpoints related to currencies
+  - name: Accounts
+    description: Endpoints related to user accounts
+  - name: Transactions
+    description: Endpoints related to transactions
 paths:
   /currency:
     get:
+      tags:
+        - Currencies
       summary: Retrieve all currencies
       description: Retrieve a list of available currencies
       operationId: getAllCurrencies
@@ -30,6 +39,8 @@ paths:
               example:
                 message: 'No currencies found in the System'
     post:
+      tags:
+        - Currencies
       summary: Add a new currency
       description: Add a new currency to the System
       operationId: addCurrency
@@ -56,6 +67,8 @@ paths:
                 message: 'Currency with the provided name already exists'
   /accounts:
     get:
+      tags:
+        - Accounts
       summary: Retrieve all accounts
       description: Retrieve a list of all user accounts
       operationId: getAllAccount
@@ -75,6 +88,8 @@ paths:
               example:
                 message: 'No accounts found in the system'
     post:
+      tags:
+        - Accounts
       summary: Create a new account
       description: Create a new user account
       operationId: createAccount
@@ -100,6 +115,8 @@ paths:
               example:
                 message: 'No accounts found in the system'
     put:
+      tags:
+        - Accounts
       summary: Update an existing account
       description: Update an existing user account
       operationId: updateAccount
@@ -130,6 +147,8 @@ paths:
                 message: 'Account not found in the system'
   /transactions:
     get:
+      tags:
+        - Transactions
       summary: Retrieve all transactions
       description: Retrieve a list of all transactions
       operationId: getAllTransactions
@@ -149,6 +168,8 @@ paths:
               example:
                 message: 'No transaction found in the system'
     post:
+      tags:
+        - Transactions
       summary: Create a new transaction
       description: Create a new transaction entry
       operationId: createTransaction
