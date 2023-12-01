@@ -9,7 +9,7 @@ info:
 servers:
   - url: https://wallet-by-HEI/v1
 paths:
-  /currencies:
+  /currency:
     get:
       summary: Retrieve all currencies
       description: Retrieve a list of available currencies
