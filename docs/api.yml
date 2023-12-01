@@ -1,4 +1,4 @@
-openapi: '3.0.2'
+openapi: 3.0.3
 info:
   title: Wallet By HEI API
   description: |
@@ -306,3 +306,16 @@ components:
         account_id:
           type: integer
           description: The ID of the account associated with the new transaction.
+  responses:
+    Success200:
+      description: OK
+      content:
+        application/json:
+          schema: 
+            type: array
+            items:
+              $ref: '#/components/schemas/{schema}'
+            properties:
+              message:
+                type: string
+                description: Message indicating success
