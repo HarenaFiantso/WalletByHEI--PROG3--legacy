@@ -148,6 +148,26 @@ paths:
             application/json:
               example:
                 message: 'No transaction found in the system'
+    post:
+      summary: Create a new transaction
+      description: Create a new transaction entry
+      operationId: createTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTransaction'
+      responses:
+        '201':
+          description: Transaction created successfully
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              example:
+                message: 'Invalid transaction data provided'
+
 components:
   schemas:
     Currency:
@@ -248,3 +268,20 @@ components:
         account_id:
           type: integer
           description: The ID of the account associated with the transaction
+    NewTransaction:
+      type: object
+      properties:
+        transaction_date:
+          type: string
+          format: date
+          description: The date of the new transaction.
+        amount:
+          type: number
+          format: float
+          description: The amount for the new transaction.
+        description:
+          type: string
+          description: The description for the new transaction.
+        account_id:
+          type: integer
+          description: The ID of the account associated with the new transaction.
