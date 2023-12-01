@@ -133,8 +133,8 @@ paths:
             schema:
               $ref: '#/components/schemas/NewAccount'
       responses:
-        '201':
-          description: A list of accounts
+        '200':
+          description: Account created successfully
           content:
             application/json:
               schema:
@@ -166,6 +166,15 @@ paths:
         - Transactions
       summary: Retrieve all transactions
       description: Retrieve a list of all transactions
+      parameters:
+        - name: page
+          in: query
+          schema:
+            $ref: '#/components/schemas/Page'
+        - name: page_size
+          in: query
+          schema: 
+            $ref: '#/components/schemas/PageSize'
       operationId: getAllTransactions
       responses:
         '200':
@@ -189,8 +198,13 @@ paths:
             schema:
               $ref: '#/components/schemas/NewTransaction'
       responses:
-        '201':
-          description: Transaction created successfully
+        '200':
+          description: Transation created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: '#/components/schemas/Currency'
 components:
   schemas:
     Currency:
