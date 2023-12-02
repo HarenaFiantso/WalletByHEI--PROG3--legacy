@@ -44,6 +44,7 @@ To use this API locally, follow these steps:
 - `/transactions`:
     - `GET`: Retrieve transactions for a specific account
     - `POST`: Add a new transaction to an account
+    - `PUT`: Update transactions details
 - `/currencies`:
     - `GET`: Retrieve the list of available currencies
     - `POST`: Add a new currency
