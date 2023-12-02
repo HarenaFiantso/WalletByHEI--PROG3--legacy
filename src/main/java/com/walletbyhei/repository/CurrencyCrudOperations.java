@@ -1,9 +1,10 @@
 package com.walletbyhei.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+
 import com.walletbyhei.model.Currency;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CurrencyCrudOperations implements CrudOperations<Currency, String>{
@@ -26,7 +27,21 @@ public class CurrencyCrudOperations implements CrudOperations<Currency, String>{
 
     @Override
     public List<Currency> getAll() {
-        return null;
+        List<Currency> allCurrency = new ArrayList<>();
+        String sql = "SELECT * FROM currency";
+
+        try (Statement statement = connection.createStatement()) {
+            ResultSet result = statement.executeQuery(sql);
+            while (result.next()) {
+                allCurrency.add(new Currency(
+                        result.getInt("currency_id"),
+                        result.getString("currency_name")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allCurrency;
     }
 
     @Override
