@@ -352,6 +352,12 @@ components:
       example:
         type: BadRequestException
         message: Bad request
+    NotAuthorizedException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example: 
+        type: NotAuthorizedException
+        message: Not Authorized
   responses:
     '400': 
       description: Bad request
@@ -359,3 +365,9 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BadRequestException'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema: 
+            $ref: '?'
