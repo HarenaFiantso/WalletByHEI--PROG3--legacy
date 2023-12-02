@@ -65,6 +65,15 @@ public class CurrencyCrudOperations implements CrudOperations<Currency, String>{
 
     @Override
     public Currency updateById(int id, String currency_name) {
-        return null;
+        String sql = "UPDATE currency SET currency_name = ? WHERE currency_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, currency_name);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return getById(id);
     }
 }
