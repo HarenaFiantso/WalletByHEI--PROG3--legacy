@@ -34,7 +34,7 @@ public class CurrencyCrudOperations implements CrudOperations<Currency, String>{
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
                 allCurrency.add(new Currency(
-                        result.getInt("currency_id"),
+                        result.getLong("currency_id"),
                         result.getString("currency_name")
                 ));
             }
@@ -52,7 +52,7 @@ public class CurrencyCrudOperations implements CrudOperations<Currency, String>{
             ResultSet result = statement.executeQuery(sql);
             if (result.next()) {
                 Currency currency = new Currency(
-                        result.getInt("currency_id"),
+                        result.getLong("currency_id"),
                         result.getString("currency_name")
                 );
                 return currency;
@@ -69,7 +69,7 @@ public class CurrencyCrudOperations implements CrudOperations<Currency, String>{
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, currency_name);
-            statement.setInt(2, id);
+            statement.setLong(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

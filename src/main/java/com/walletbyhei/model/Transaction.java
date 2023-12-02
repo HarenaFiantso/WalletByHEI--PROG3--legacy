@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 public class Transaction {
-  private int transaction_id;
+  private long transaction_id;
   private LocalDate transaction_date;
   private BigDecimal amount;
   private String description;
