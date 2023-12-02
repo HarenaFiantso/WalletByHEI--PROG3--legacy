@@ -173,7 +173,7 @@ paths:
             $ref: '#/components/schemas/Page'
         - name: page_size
           in: query
-          schema: 
+          schema:
             $ref: '#/components/schemas/PageSize'
       operationId: getAllTransactions
       responses:
@@ -342,7 +342,7 @@ components:
     Exception:
       type: object
       properties:
-        type: 
+        type:
           type: string
         message:
           type: string
@@ -355,11 +355,17 @@ components:
     NotAuthorizedException:
       allOf:
         - $ref: '#/components/schemas/Exception'
-      example: 
+      example:
         type: NotAuthorizedException
         message: Not Authorized
+    ResourceNotFoundException: 
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example: 
+        type: ResourceNotFoundException
+        message: Resource of type <T> identified by <I> not found
   responses:
-    '400': 
+    '400':
       description: Bad request
       content:
         application/json:
@@ -369,5 +375,11 @@ components:
       description: Forbidden
       content:
         application/json:
+          schema:
+            $ref: '#/components/schemas/NotAuthorizedException'
+    '404':
+      description: Not found
+      content:
+        application/json:
           schema: 
-            $ref: '?'
+            $ref: '#/components/schemas/ResourceNotFoundException'
