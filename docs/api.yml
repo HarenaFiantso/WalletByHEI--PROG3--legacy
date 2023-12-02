@@ -118,6 +118,37 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+  /currencies/{id}:
+    get:
+      tags:
+        - Currencies
+      summary: Get a currency by ID
+      description: Retrieve a specific currency by its ID
+      operationId: getCurrencyById
+      parameters:
+        - name: currency_id
+          in: path
+          description: ID of the currency to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successfully retrieve currency by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Currency'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
   /accounts:
     get:
       tags:
