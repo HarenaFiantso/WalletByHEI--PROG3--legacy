@@ -339,3 +339,23 @@ components:
     PageSize:
       type: integer
       description: Cannot exceed `500`
+    Exception:
+      type: object
+      properties:
+        type: 
+          type: string
+        message:
+          type: string
+    BadRequestException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: BadRequestException
+        message: Bad request
+  responses:
+    '400': 
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequestException'
