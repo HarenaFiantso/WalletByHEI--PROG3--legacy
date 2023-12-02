@@ -3,10 +3,11 @@ package com.walletbyhei.repository;
 import java.util.List;
 
 public interface CrudOperations<T, U> {
-    void insert(T entity);
-    List<T> getAll();
+  void insert(T entity);
 
-    T getById(int id);
+  List<T> getAll();
 
-    T updateById(int id, U entityToUpdate);
+  T getById(int id);
+
+  T updateById(int id, U entityToUpdate);
 }
