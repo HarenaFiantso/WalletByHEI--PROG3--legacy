@@ -4,10 +4,12 @@ info:
   description: |
     This project consists of a Java API for managing accounts, transactions, and currencies for a financial management
     application. It uses Java for the backend, a PostgreSQL database to store the data, and exposes endpoints to interact
-    with this data
+    with this data. HAPPY HACKING🚀
   version: 'latest'
 servers:
   - url: https://wallet-by-HEI/v1
+security:
+  - BearerAuth: []
 tags:
   - name: Currencies
     description: Endpoints related to currencies
@@ -539,3 +541,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/InternalServerException'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
