@@ -379,6 +379,37 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+  /transactions/{id}: 
+    get: 
+      tags:
+        - Transactions
+      summary: Get a transaction by ID 
+      description: Retrieve a specific transaction by its ID
+      operationId: getTransactionById
+      parameters:
+        - name: transaction_id 
+          in: path
+          description: ID of the transaction to retrieve
+          required: true
+          schema: 
+            type: integer
+      responses:
+        '200': 
+          description: Successfully retrieved transaction by ID
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Transaction'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
 components:
   schemas:
     Currency:
