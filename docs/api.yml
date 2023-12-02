@@ -97,7 +97,7 @@ paths:
       description: Retrieve a specific currency by its ID
       operationId: getCurrencyById
       parameters:
-        - name: currency_id
+        - name: id
           in: path
           description: ID of the currency to retrieve
           required: true
@@ -127,7 +127,7 @@ paths:
       description: Update a existing currency in a the system
       operationId: updateCurrency
       parameters:
-        - name: currency_id
+        - name: id
           in: path
           description: ID of the currency to update
           required: true
@@ -240,7 +240,7 @@ paths:
       description: Retrieve a specific account by its ID
       operationId: getAccoundById
       parameters:
-        - name: account_id
+        - name: id
           in: path
           description: ID of the account to retrieve
           required: true
@@ -270,7 +270,7 @@ paths:
       description: Update an existing user account
       operationId: updateAccount
       parameters:
-        - name: account_id
+        - name: id
           in: path
           description: ID of the account to update
           required: true
@@ -372,7 +372,7 @@ paths:
       description: Retrieve a specific transaction by its ID
       operationId: getTransactionById
       parameters:
-        - name: transaction_id
+        - name: id
           in: path
           description: ID of the transaction to retrieve
           required: true
@@ -402,7 +402,7 @@ paths:
       description: Update an existing transaction in the system
       operationId: updateTransaction
       parameters:
-        - name: transaction_id
+        - name: id
           in: path
           description: ID of the transaction to update
           required: true
