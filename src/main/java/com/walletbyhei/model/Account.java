@@ -17,7 +17,7 @@ public class Account {
   private String password;
   // BigDecimal is more accurate for financial calculations
   private BigDecimal balance;
-  private int currency_id;
+  private long currency_id;
 
   public void setAccount_id(long account_id) {
     this.account_id = account_id;
