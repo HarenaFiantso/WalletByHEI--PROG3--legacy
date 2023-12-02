@@ -46,6 +46,20 @@ public class CurrencyCrudOperations implements CrudOperations<Currency, String>{
 
     @Override
     public Currency getById(int id) {
+        String sql = "SELECT * FROM currency WHERE currency_id = " + id;
+
+        try (Statement statement = connection.createStatement()) {
+            ResultSet result = statement.executeQuery(sql);
+            if (result.next()) {
+                Currency currency = new Currency(
+                        result.getInt("currency_id"),
+                        result.getString("currency_name")
+                );
+                return currency;
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
         return null;
     }
 
