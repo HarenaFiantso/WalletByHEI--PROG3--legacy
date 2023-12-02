@@ -364,6 +364,18 @@ components:
       example: 
         type: ResourceNotFoundException
         message: Resource of type <T> identified by <I> not found
+    TooManyRequestsException: 
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:  
+        type: TooManyRequestsException
+        message: Too many requests
+    InternalServerException: 
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example: 
+        type: InternalServerException
+        message: Unexpected error
   responses:
     '400':
       description: Bad request
@@ -383,3 +395,15 @@ components:
         application/json:
           schema: 
             $ref: '#/components/schemas/ResourceNotFoundException'
+    '429': 
+      description: Too many request to the API 
+      content:
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/TooManyRequestsException'
+    '500':
+      description: Internal server error
+      content:
+        application/json: 
+          schema: 
+            $ref: '?'
