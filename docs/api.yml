@@ -362,6 +362,7 @@ components:
           description: The password for the account
         balance:
           type: number
+          format: float
           description: The current balance in the account
         currency_id:
           type: integer
@@ -380,6 +381,7 @@ components:
           description: The password for the new account.
         balance:
           type: number
+          format: float
           description: The initial balance for the new account.
         currency_id:
           type: integer
@@ -470,9 +472,13 @@ components:
     Page:
       type: integer
       description: Start at `1`
+      minimum: 1
+      default: 1
     PageSize:
       type: integer
       description: Cannot exceed `500`
+      maximum: 500
+      default: 100
     Exception:
       type: object
       properties:
