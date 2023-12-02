@@ -25,7 +25,7 @@ with this data
 - Addition, retrieval and management of transactions associated with accounts
 - Currency management: addition, conversion, etc ..
 
-### Code quality
+## Code quality
 
 Just run `./format.sh` and your whole code will be formatted using Google Java Format. To quote the GJF team: "There is no configurability as to the formatter's algorithm for formatting. This is a deliberate design decision to unify our code formatting on a single format."
 
@@ -48,15 +48,21 @@ To use this API locally, follow these steps:
 - `/accounts`:
   - `GET`: Retrieve the list of accounts
   - `POST`: Create a new account
-  - `PUT`: Update account details
+- `/accounts/:id`:
+  - `GET`: Retrieve account by ID
+  - `PUT`: Update account by ID
 - `/transactions`:
   - `GET`: Retrieve transactions for a specific account
   - `POST`: Add a new transaction to an account
-  - `PUT`: Update transactions details
+- `/transactions/:id`:
+  - `GET`: Retrieve transaction by ID
+  - `PUT`: Update transaction by ID
 - `/currencies`:
   - `GET`: Retrieve the list of available currencies
   - `POST`: Add a new currency
-  - `PUT`: Update exchange rates
+- `/currencies/:id`:
+  - `GET`: Retrieve currency by ID
+  - `PUT`: Update currency by ID
 
 ### Petstore link:
 
