@@ -50,4 +50,7 @@ To use this API locally, follow these steps:
     - `POST`: Add a new currency
     - `PUT`: Update exchange rates
 
+### Petstore link: 
+https://petstore.swagger.io/?url=https://raw.githubusercontent.com/HarenaFiantso/WalletByHEI--PROG3/master/docs/api.yml
+
 #### Andy Avotiana (STD22089) & Fiantso Harena(STD22086) - 2023
