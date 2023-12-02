@@ -14,5 +14,5 @@ public class Transaction {
   private LocalDate transaction_date;
   private BigDecimal amount;
   private String description;
-  private int account_id;
+  private long account_id;
 }

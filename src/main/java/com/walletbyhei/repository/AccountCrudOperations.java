@@ -1,7 +1,7 @@
 package com.walletbyhei.repository;
 
 import com.walletbyhei.model.Account;
-import com.walletbyhei.model.Currency;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ public class AccountCrudOperations implements CrudOperations<Account, String>{
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, account.getFirst_name());
-            statement.setString(3, account.getLast_name());
-            statement.setString(6, account.getPassword());
-            statement.setBigDecimal(7, account.getBalance());
-            statement.setLong(9, account.getCurrency_id());
+            statement.setString(2, account.getLast_name());
+            statement.setString(3, account.getPassword());
+            statement.setBigDecimal(4, account.getBalance());
+            statement.setLong(5, account.getCurrency_id());
             statement.executeUpdate();
             System.out.println("Entity inserted successfully");
         } catch (SQLException e) {
