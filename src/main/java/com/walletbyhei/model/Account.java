@@ -11,15 +11,15 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class Account {
-  private int account_id;
+  private long account_id;
   private String first_name;
   private String last_name;
   private String password;
   // BigDecimal is more accurate for financial calculations
   private BigDecimal balance;
-  private int currency_id;
+  private long currency_id;
 
-  public void setAccount_id(int account_id) {
+  public void setAccount_id(long account_id) {
     this.account_id = account_id;
   }
 
