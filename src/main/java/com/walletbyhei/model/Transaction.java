@@ -1,7 +1,8 @@
 package com.walletbyhei.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import lombok.*;
 
 @Getter
@@ -11,8 +12,9 @@ import lombok.*;
 @EqualsAndHashCode
 public class Transaction {
   private long transaction_id;
-  private LocalDate transaction_date;
+  private String label;
   private BigDecimal amount;
-  private String description;
+  private LocalDateTime transaction_date_time;
+  private String type;
   private long account_id;
 }
