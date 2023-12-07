@@ -1,11 +1,7 @@
 -- Create the currency table if not exists
+-- This should be created first
 CREATE TABLE IF NOT EXISTS currency (
     currency_id SERIAL PRIMARY KEY,
     currency_name VARCHAR(50) NOT NULL
+    currency_code "currency_code" NOT NULL
 );
--- Three examples of mock data
-INSERT INTO currency (currency_name)
-VALUES ('US Dollar'),
-    ('Euro'),
-    ('British Pound'),
-    ('Ariary');
