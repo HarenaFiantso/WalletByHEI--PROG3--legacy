@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS currency_value (
     currency_value_id SERIAL PRIMARY KEY,
     source_currency_id INT NOT NULL,
     destination_currency_id INT NOT NULL,
-    exchange_rate DOUBLE,
+    exchange_rate decimal,
     date_of_effect DATE,
     FOREIGN KEY (source_currency_id) REFERENCES currency(currency_id),
     FOREIGN KEY (destination_currency_id) REFERENCES currency(currency_id)
