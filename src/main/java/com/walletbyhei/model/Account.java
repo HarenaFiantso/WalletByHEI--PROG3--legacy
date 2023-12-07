@@ -14,7 +14,6 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class Account {
-<<<<<<< HEAD
   private int account_id;
   private String first_name;
   private String last_name;
