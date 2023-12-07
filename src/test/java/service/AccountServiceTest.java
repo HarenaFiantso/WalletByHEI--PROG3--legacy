@@ -25,7 +25,8 @@ public class AccountServiceTest {
   @BeforeEach
   public void setUp() {
     MockitoAnnotations.openMocks(this);
-    accountService = new AccountService();
+    accountRepository = mock(AccountRepository.class);
+    accountService = new AccountService(accountRepository);
   }
 
   @Test
