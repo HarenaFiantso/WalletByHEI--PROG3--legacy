@@ -14,5 +14,5 @@ public class Transaction {
     private String label;
     private double amount;
     private LocalDateTime dateTime;
-    private String transactionType;
+    private TransactionType transactionType;
 }
