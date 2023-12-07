@@ -108,4 +108,38 @@ public class AccountRepository implements CrudOperations<Account> {
     }
     return null;
   }
+
+  public void updateAccount(Account account) throws SQLException {
+    String UPDATE_QUERY = "UPDATE account SET balance = ? WHERE account_id = ?";
+
+    try (PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
+      statement.setDouble(1, account.getBalance());
+      statement.setLong(2, account.getAccountId());
+
+      int rowsAffected = statement.executeUpdate();
+      if (rowsAffected != 1) {
+        throw new SQLException("Failed to update the account");
+      }
+    }
+  }
+
+  public void beginTransaction() throws SQLException {
+    if (connection != null) {
+      connection.setAutoCommit(false);
+    }
+  }
+
+  public void commitTransaction() throws SQLException {
+    if (connection != null) {
+      connection.commit();
+      connection.setAutoCommit(true);
+    }
+  }
+
+  public void rollbackTransaction() throws SQLException {
+    if (connection != null) {
+      connection.rollback();
+      connection.setAutoCommit(true);
+    }
+  }
 }

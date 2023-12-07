@@ -1,13 +1,11 @@
 package com.walletbyhei.model;
 
+import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Account {
   /* - Use camelCase as variable notation
    *  - Add some additional attributes
@@ -19,4 +17,8 @@ public class Account {
   private List<Transaction> transactionList;
   private int currencyId;
   private AccountType accountType;
+
+  public Account() {
+    this.transactionList = new ArrayList<>();
+  }
 }
