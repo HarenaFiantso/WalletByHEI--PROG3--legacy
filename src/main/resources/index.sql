@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS currency (
 CREATE TABLE IF NOT EXISTS account (
     account_id SERIAL PRIMARY KEY,
     account_name VARCHAR(255) NOT NULL,
-    balance DOUBLE NOT NULL,
+    balance decimal NOT NULL,
     currency_id INT NOT NULL,
     account_type "account_type" NOT NULL,
     FOREIGN KEY (currency_id) REFERENCES currency(currency_id)
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS "transaction" (
     transaction_id SERIAL PRIMARY KEY,
     account_id INT NOT NULL,
     label VARCHAR(255) NOT NULL,
-    amount DOUBLE NOT NULL,
+    amount decimal NOT NULL,
     transaction_type "transaction_type" NOT NULL,
     transaction_date_time TIMESTAMP NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account(account_id)
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS currency_value (
     currency_value_id SERIAL PRIMARY KEY,
     source_currency_id INT NOT NULL,
     destination_currency_id INT NOT NULL,
-    exchange_rate DOUBLE,
+    exchange_rate decimal,
     date_of_effect DATE,
     FOREIGN KEY (source_currency_id) REFERENCES currency(currency_id),
     FOREIGN KEY (destination_currency_id) REFERENCES currency(currency_id)
