@@ -2,12 +2,14 @@ package com.walletbyhei.repository;
 
 import java.util.List;
 
-public interface CrudOperations<T, U> {
-  void insert(T entity);
+public interface CrudOperations<T> {
+  T findById(Integer id);
 
-  List<T> getAll();
+  List<T> findAll();
 
-  T getById(int id);
+  List<T> saveAll(List<T> toSave);
 
-  T updateById(int id, U entityToUpdate);
+  T save(T toSave);
+
+  T delete(T toDelete);
 }
