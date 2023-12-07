@@ -17,7 +17,7 @@ public class Account {
     private Long accountId;
     private String accountName;
     private double balance;
-    private List<?> transactionList;
+    private List<Transaction> transactionList;
     private int currencyId;
     private String accountType;
 }
