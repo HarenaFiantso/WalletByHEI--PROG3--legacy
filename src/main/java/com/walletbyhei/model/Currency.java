@@ -8,6 +8,6 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 public class Currency {
-  private int currency_id;
-  private String currency_name;
+  private int currencyId; //camelCase
+  private String currencyName; //camelCase
 }

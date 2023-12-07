@@ -12,7 +12,7 @@ import lombok.*;
 public class Transaction {
   private int transaction_id;
   private LocalDate transaction_date;
-  private BigDecimal amount;
+  private BigDecimal amount; // Double
   private String description;
   private int account_id;
 }
