@@ -8,10 +8,13 @@ import com.walletbyhei.model.Transaction;
 import com.walletbyhei.model.TransactionType;
 import com.walletbyhei.repository.AccountRepository;
 import com.walletbyhei.service.AccountService;
+
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +23,9 @@ import org.mockito.MockitoAnnotations;
 
 public class AccountServiceTest {
   private AccountService accountService;
-  @Mock private AccountRepository accountRepository;
+  @Mock
+  private AccountRepository accountRepository;
+  private Account testAccount;
 
   @BeforeEach
   public void setUp() {
@@ -88,5 +93,25 @@ public class AccountServiceTest {
     Assertions.assertEquals(
         30000,
         accountService.getBalanceAtDateTime(account, LocalDateTime.parse("2023-12-06T16:00:00")));
+  }
+
+  @Test
+  public void testGetCurrentBalance() {
+    Account testAccount = new Account();
+    testAccount.setAccountId(1L);
+    testAccount.setAccountName("Test Account");
+    testAccount.setBalance(500.0);
+
+    List<Transaction> transactions = new ArrayList<>();
+    transactions.add(new Transaction(1L, "Salary", 100000.0, LocalDateTime.parse("2023-12-01T00:15:00"), TransactionType.CREDIT));
+    transactions.add(new Transaction(2L, "New shoes", 50000.0, LocalDateTime.parse("2023-12-02T14:00:00"), TransactionType.DEBIT));
+    testAccount.setTransactionList(transactions);
+
+    LocalDateTime dateTimeToCheck = LocalDateTime.parse("2023-12-01T00:14:00");
+
+    when(accountRepository.getBalanceAtDateTime(testAccount, dateTimeToCheck)).thenReturn(0.0);
+
+    double balanceAtDateTime = accountService.getBalanceAtDateTime(testAccount, dateTimeToCheck);
+    Assertions.assertEquals(0.0, balanceAtDateTime);
   }
 }

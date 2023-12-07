@@ -1,7 +1,11 @@
 package com.walletbyhei.repository;
 
 import com.walletbyhei.model.Account;
+import com.walletbyhei.model.Transaction;
+import com.walletbyhei.model.TransactionType;
+
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,5 +145,23 @@ public class AccountRepository implements CrudOperations<Account> {
       connection.rollback();
       connection.setAutoCommit(true);
     }
+  }
+
+  public double getBalanceAtDateTime(Account account, LocalDateTime dateTime) {
+    List<Transaction> transactions = account.getTransactionList();
+    double balance = 0.0;
+
+    for (Transaction transaction : transactions) {
+      LocalDateTime transactionDateTime = transaction.getDateTime();
+      if (transactionDateTime != null && !transactionDateTime.isAfter(dateTime)) {
+        if (transaction.getTransactionType() == TransactionType.CREDIT) {
+          balance += transaction.getAmount();
+        } else {
+          balance -= transaction.getAmount();
+        }
+      }
+    }
+
+    return balance;
   }
 }
