@@ -1,79 +1,73 @@
 package com.walletbyhei.repository;
 
-import java.sql.*;
-
 import com.walletbyhei.model.Currency;
-
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrencyCrudOperations implements CrudOperations<Currency, String>{
-    private Connection connection;
+public class CurrencyCrudOperations implements CrudOperations<Currency, String> {
+  private Connection connection;
 
-    public CurrencyCrudOperations(Connection connection){
-        this.connection = connection;
+  public CurrencyCrudOperations(Connection connection) {
+    this.connection = connection;
+  }
+
+  @Override
+  public void insert(Currency currency) {
+    String sql = "INSERT INTO currency(currency_name) VALUES (?)";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, currency.getCurrency_name());
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
+  }
 
-    @Override
-    public void insert(Currency currency) {
-        String sql = "INSERT INTO currency(currency_name) VALUES (?)";
+  @Override
+  public List<Currency> getAll() {
+    List<Currency> allCurrency = new ArrayList<>();
+    String sql = "SELECT * FROM currency";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, currency.getCurrency_name());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    try (Statement statement = connection.createStatement()) {
+      ResultSet result = statement.executeQuery(sql);
+      while (result.next()) {
+        allCurrency.add(
+            new Currency(result.getLong("currency_id"), result.getString("currency_name")));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
+    return allCurrency;
+  }
 
-    @Override
-    public List<Currency> getAll() {
-        List<Currency> allCurrency = new ArrayList<>();
-        String sql = "SELECT * FROM currency";
+  @Override
+  public Currency getById(int id) {
+    String sql = "SELECT * FROM currency WHERE currency_id = " + id;
 
-        try (Statement statement = connection.createStatement()) {
-            ResultSet result = statement.executeQuery(sql);
-            while (result.next()) {
-                allCurrency.add(new Currency(
-                        result.getLong("currency_id"),
-                        result.getString("currency_name")
-                ));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return allCurrency;
+    try (Statement statement = connection.createStatement()) {
+      ResultSet result = statement.executeQuery(sql);
+      if (result.next()) {
+        Currency currency =
+            new Currency(result.getLong("currency_id"), result.getString("currency_name"));
+        return currency;
+      }
+    } catch (SQLException ex) {
+      throw new RuntimeException(ex);
     }
+    return null;
+  }
 
-    @Override
-    public Currency getById(int id) {
-        String sql = "SELECT * FROM currency WHERE currency_id = " + id;
+  @Override
+  public Currency updateById(int id, String currency_name) {
+    String sql = "UPDATE currency SET currency_name = ? WHERE currency_id = ?";
 
-        try (Statement statement = connection.createStatement()) {
-            ResultSet result = statement.executeQuery(sql);
-            if (result.next()) {
-                Currency currency = new Currency(
-                        result.getLong("currency_id"),
-                        result.getString("currency_name")
-                );
-                return currency;
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-        return null;
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, currency_name);
+      statement.setLong(2, id);
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-
-    @Override
-    public Currency updateById(int id, String currency_name) {
-        String sql = "UPDATE currency SET currency_name = ? WHERE currency_id = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, currency_name);
-            statement.setLong(2, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return getById(id);
-    }
+    return getById(id);
+  }
 }

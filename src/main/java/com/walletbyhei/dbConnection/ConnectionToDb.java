@@ -6,14 +6,14 @@ import java.sql.SQLException;
 
 public class ConnectionToDb {
   /* Configure the postgresql database configuration here
-  *   - Create a new environment variable with the prefix "DB"
-  *   - Make all variable to final
-  *   - remove the connectiondb method and just refactor it just using getConnection and closeConnection
-  * */
+   *   - Create a new environment variable with the prefix "DB"
+   *   - Make all variable to final
+   *   - remove the connectiondb method and just refactor it just using getConnection and closeConnection
+   * */
   private static Connection connection;
-  final public static String DB_URL = System.getenv("DB_URL");
-  final public static String DB_PASSWORD = System.getenv("DB_PASSWORD");
-  final public static String DB_USERNAME = System.getenv("DB_USERNAME");
+  public static final String DB_URL = System.getenv("DB_URL");
+  public static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
+  public static final String DB_USERNAME = System.getenv("DB_USERNAME");
 
   public static Connection getConnection() {
     if (connection != null) {
