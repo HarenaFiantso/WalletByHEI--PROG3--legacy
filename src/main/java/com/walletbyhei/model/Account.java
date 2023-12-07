@@ -12,7 +12,7 @@ import java.util.List;
 public class Account {
     /* - Use camelCase as variable notation
     *  - Add some additional attributes
-    *  - TODO: Create an Enum file for the accountType attribute
+    *  - TODO: Create an Enum file for the accountType attribute ✅
     *  */
     private Long accountId;
     private String accountName;

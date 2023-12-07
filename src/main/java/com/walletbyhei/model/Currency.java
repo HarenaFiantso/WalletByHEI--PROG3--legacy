@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Currency {
     /* - Use camelCase as variable notation
-    *  - TODO: Create an Enum file for the currencyCode attribute
+    *  - TODO: Create an Enum file for the currencyCode attribute ✅
     *  */
     private Long currencyId;
     private String currencyName;
-    private String currencyCode;
+    private CurrencyCode currencyCode;
 }
