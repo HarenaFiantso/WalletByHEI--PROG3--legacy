@@ -18,6 +18,6 @@ public class Account {
     private String accountName;
     private double balance;
     private List<Transaction> transactionList;
-    private int currencyId;
-    private String accountType;
+    private Currency currency;
+    private AccountType accountType;
 }
