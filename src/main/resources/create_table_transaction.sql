@@ -1,19 +1,9 @@
 -- Create the transaction table if not exists
+-- Should create transaction_type first
 CREATE TABLE IF NOT EXISTS "transaction" (
     transaction_id SERIAL PRIMARY KEY,
-    transaction_date DATE NOT NULL,
-    amount DECIMAL(15, 2) NOT NULL,
-    description TEXT,
-    account_id INT NOT NULL,
-    FOREIGN KEY (account_id) REFERENCES account(account_id)
+    label VARCHAR(100) NOT NULL,
+    amount DOUBLE PRECISION NOT NULL,
+    date_time DATE,
+    transaction_type "transaction_type" NOT NULL,
 );
--- Three examples of mock data
-INSERT INTO "transaction" (
-        transaction_date,
-        amount,
-        description,
-        account_id
-    )
-VALUES ('2023-11-28', 200.50, 'Grocery shopping', 1),
-    ('2023-11-29', 50.00, 'Dinner at a restaurant', 2),
-    ('2023-11-30', 1000.75, 'Electronics purchase', 3);
