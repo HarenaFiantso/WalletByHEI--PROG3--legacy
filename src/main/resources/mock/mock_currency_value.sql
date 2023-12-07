@@ -1,0 +1,2 @@
+INSERT INTO currency_value (source_currency_id, destination_currency_id, exchange_rate, date_of_effect) values (1, 2, 4500, '2023-12-07');
+INSERT INTO currency_value (source_currency_id, destination_currency_id, exchange_rate, date_of_effect) values (2, 1, 4600, '2023-12-08');
