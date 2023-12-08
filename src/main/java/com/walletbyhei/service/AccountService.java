@@ -73,12 +73,12 @@ public class AccountService {
   }
 
   /* TODO: (Bonus) Create a function that get the balance of the actual account ✅ */
-  public double getCurrentBalance(Account account) {
+  public double getCurrentBalance(Account account, LocalDateTime dateTimeToCheck) {
     LocalDateTime currentDateTime = LocalDateTime.now();
     return accountRepository.getBalanceAtDateTime(account, currentDateTime);
   }
 
-  /* TODO: Create function that can create the balance history of an account in DateTime range */
+  /* TODO: Create function that can create the balance history of an account in DateTime range ✅ */
   public Map<LocalDateTime, Double> getBalanceHistoryInDateTimeRange(
       Account account, LocalDateTime startDateTime, LocalDateTime endDateTime) {
     Map<LocalDateTime, Double> balanceHistory = new HashMap<>();
@@ -93,5 +93,29 @@ public class AccountService {
     }
 
     return balanceHistory;
+  }
+
+  /* TODO: Create a function that can do money transfer between two accounts ✅ */
+  public boolean makeTransfer(Account sourceAccount, Account destinationAccount, double amount) throws SQLException {
+    if (sourceAccount.equals(destinationAccount)) {
+      System.out.println("An account could not make money transfer for himself");
+      return false;
+    }
+
+    if (sourceAccount.getBalance() < amount) {
+      System.out.println("Not enough balance to perform transfer");
+      return false;
+    }
+
+    /* - Realizing the transfer
+    *  - Update all accounts from the database
+    * */
+    sourceAccount.setBalance(sourceAccount.getBalance() - amount);
+    destinationAccount.setBalance(destinationAccount.getBalance() + amount);
+    accountRepository.updateAccount(sourceAccount);
+    accountRepository.updateAccount(destinationAccount);
+
+    System.out.println("Transfer done successfully !");
+    return true;
   }
 }

@@ -18,7 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class AccountServiceTest {
+public class AccountServiceIT {
   @InjectMocks private AccountService accountService;
   @Mock private AccountRepository accountRepository;
 
@@ -118,7 +118,7 @@ public class AccountServiceTest {
 
     when(accountRepository.getBalanceAtDateTime(testAccount, dateTimeToCheck)).thenReturn(0.0);
 
-    double balanceAtDateTime = accountService.getBalanceAtDateTime(testAccount, dateTimeToCheck);
+    double balanceAtDateTime = accountService.getCurrentBalance(testAccount, dateTimeToCheck);
     Assertions.assertEquals(0.0, balanceAtDateTime);
   }
 
@@ -132,12 +132,38 @@ public class AccountServiceTest {
     LocalDateTime endDateTime = LocalDateTime.parse("2023-12-02T00:00:00");
 
     /* Stub the accountRepository.getBalanceAtDateTime() method */
-    when(accountRepository.getBalanceAtDateTime(eq(account), any()))
-        .thenReturn(500.0);
+    when(accountRepository.getBalanceAtDateTime(eq(account), any())).thenReturn(500.0);
 
-    Map<LocalDateTime, Double> balanceHistory = accountService.getBalanceHistoryInDateTimeRange(account, startDateTime, endDateTime);
+    Map<LocalDateTime, Double> balanceHistory =
+        accountService.getBalanceHistoryInDateTimeRange(account, startDateTime, endDateTime);
 
     int expectedSize = 1441;
     Assertions.assertEquals(expectedSize, balanceHistory.size());
+  }
+
+  @Test
+  public void testMakeTransfer() throws SQLException {
+    Account sourceAccount = new Account();
+    sourceAccount.setAccountId((1L));
+    sourceAccount.setBalance(1000.0);
+
+    Account destinationAccount = new Account();
+    destinationAccount.setAccountId(2L);
+    destinationAccount.setBalance(500.0);
+
+    AccountRepository accountRepository = mock(AccountRepository.class);
+    AccountService accountService = new AccountService(accountRepository);
+
+    doNothing().when(accountRepository).updateAccount(sourceAccount);
+    doNothing().when(accountRepository).updateAccount(destinationAccount);
+
+    boolean transferResult = accountService.makeTransfer(sourceAccount, destinationAccount, 200.0);
+
+    verify(accountRepository, times(1)).updateAccount(sourceAccount);
+    verify(accountRepository, times(1)).updateAccount(destinationAccount);
+
+    Assertions.assertTrue(transferResult);
+    Assertions.assertEquals(800.0, sourceAccount.getBalance(), 0.001);
+    Assertions.assertEquals(700.0, destinationAccount.getBalance(), 0.001);
   }
 }
