@@ -140,4 +140,30 @@ public class AccountServiceTest {
     int expectedSize = 1441;
     Assertions.assertEquals(expectedSize, balanceHistory.size());
   }
+
+  @Test
+  public void testMakeTransfer() throws SQLException {
+    Account sourceAccount = new Account();
+    sourceAccount.setAccountId((1L));
+    sourceAccount.setBalance(1000.0);
+
+    Account destinationAccount = new Account();
+    destinationAccount.setAccountId(2L);
+    destinationAccount.setBalance(500.0);
+
+    AccountRepository accountRepository = mock(AccountRepository.class);
+    AccountService accountService = new AccountService(accountRepository);
+
+    doNothing().when(accountRepository).updateAccount(sourceAccount);
+    doNothing().when(accountRepository).updateAccount(destinationAccount);
+
+    boolean transferResult = accountService.makeTransfer(sourceAccount, destinationAccount, 200.0);
+
+    verify(accountRepository, times(1)).updateAccount(sourceAccount);
+    verify(accountRepository, times(1)).updateAccount(destinationAccount);
+
+    Assertions.assertTrue(transferResult);
+    Assertions.assertEquals(800.0, sourceAccount.getBalance(), 0.001);
+    Assertions.assertEquals(700.0, destinationAccount.getBalance(), 0.001);
+  }
 }
