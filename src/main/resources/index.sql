@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS "transaction" (
     account_id UUID NOT NULL,
     label VARCHAR(255) NOT NULL,
     amount decimal NOT NULL,
-    transaction_type "transaction_type" NOT NULL,
     transaction_date_time TIMESTAMP NOT NULL,
+    transaction_type "transaction_type" NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account(account_id)
 );
 
