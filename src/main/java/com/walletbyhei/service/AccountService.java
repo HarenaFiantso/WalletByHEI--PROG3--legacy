@@ -8,7 +8,9 @@ import com.walletbyhei.repository.AccountRepository;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -70,9 +72,26 @@ public class AccountService {
     return balance;
   }
 
-  /* TODO: (Bonus) Create a function that get the balance of the actual account */
+  /* TODO: (Bonus) Create a function that get the balance of the actual account ✅ */
   public double getCurrentBalance(Account account) {
     LocalDateTime currentDateTime = LocalDateTime.now();
     return accountRepository.getBalanceAtDateTime(account, currentDateTime);
+  }
+
+  /* TODO: Create function that can create the balance history of an account in DateTime range */
+  public Map<LocalDateTime, Double> getBalanceHistoryInDateTimeRange(
+      Account account, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    Map<LocalDateTime, Double> balanceHistory = new HashMap<>();
+
+    LocalDateTime currentDateTime = startDateTime;
+    while (!currentDateTime.isAfter(endDateTime)) {
+      double balanceAtDateTime = accountRepository.getBalanceAtDateTime(account, currentDateTime);
+      balanceHistory.put(currentDateTime, balanceAtDateTime);
+
+      /* Increment the date to pass at the next moment, for example for each minute */
+      currentDateTime = currentDateTime.plusMinutes(1);
+    }
+
+    return balanceHistory;
   }
 }

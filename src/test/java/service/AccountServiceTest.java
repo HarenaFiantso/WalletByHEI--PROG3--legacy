@@ -8,13 +8,9 @@ import com.walletbyhei.model.Transaction;
 import com.walletbyhei.model.TransactionType;
 import com.walletbyhei.repository.AccountRepository;
 import com.walletbyhei.service.AccountService;
-
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import java.util.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +19,7 @@ import org.mockito.MockitoAnnotations;
 
 public class AccountServiceTest {
   private AccountService accountService;
-  @Mock
-  private AccountRepository accountRepository;
+  @Mock private AccountRepository accountRepository;
 
   @BeforeEach
   public void setUp() {
@@ -102,8 +97,20 @@ public class AccountServiceTest {
     testAccount.setBalance(500.0);
 
     List<Transaction> transactions = new ArrayList<>();
-    transactions.add(new Transaction(1L, "Salary", 100000.0, LocalDateTime.parse("2023-12-01T00:15:00"), TransactionType.CREDIT));
-    transactions.add(new Transaction(2L, "New shoes", 50000.0, LocalDateTime.parse("2023-12-02T14:00:00"), TransactionType.DEBIT));
+    transactions.add(
+        new Transaction(
+            1L,
+            "Salary",
+            100000.0,
+            LocalDateTime.parse("2023-12-01T00:15:00"),
+            TransactionType.CREDIT));
+    transactions.add(
+        new Transaction(
+            2L,
+            "New shoes",
+            50000.0,
+            LocalDateTime.parse("2023-12-02T14:00:00"),
+            TransactionType.DEBIT));
     testAccount.setTransactionList(transactions);
 
     LocalDateTime dateTimeToCheck = LocalDateTime.parse("2023-12-01T00:14:00");
@@ -112,5 +119,34 @@ public class AccountServiceTest {
 
     double balanceAtDateTime = accountService.getBalanceAtDateTime(testAccount, dateTimeToCheck);
     Assertions.assertEquals(0.0, balanceAtDateTime);
+  }
+
+  @Test
+  public void testGetBalanceHistoryInDateTimeRange() {
+    Account testAccount = new Account();
+    testAccount.setAccountId(1L);
+    testAccount.setAccountName("Saving account");
+    testAccount.setBalance(500.0);
+
+    LocalDateTime startDateTime = LocalDateTime.parse("2023-12-01T00:00:00");
+    LocalDateTime endDateTime = LocalDateTime.parse("2023-12-02T00:00:00");
+
+    when(accountRepository.getBalanceAtDateTime(eq(testAccount), any()))
+        .thenReturn(100.0)
+        .thenReturn(120.0)
+        .thenReturn(90.0)
+        .thenReturn(150.0)
+        .thenReturn(180.0);
+
+    Map<LocalDateTime, Double> expectedBalanceHistory = new LinkedHashMap<>();
+    expectedBalanceHistory.put(startDateTime, 100.0);
+    expectedBalanceHistory.put(startDateTime.plusHours(1), 120.0);
+    expectedBalanceHistory.put(startDateTime.plusHours(2), 90.0);
+    expectedBalanceHistory.put(startDateTime.plusHours(3), 150.0);
+    expectedBalanceHistory.put(startDateTime.plusHours(4), 180.0);
+
+    Map<LocalDateTime, Double> balanceHistory =
+        accountService.getBalanceHistoryInDateTimeRange(testAccount, startDateTime, endDateTime);
+    Assertions.assertEquals(expectedBalanceHistory, balanceHistory);
   }
 }

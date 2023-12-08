@@ -3,7 +3,6 @@ package com.walletbyhei.repository;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Transaction;
 import com.walletbyhei.model.TransactionType;
-
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
