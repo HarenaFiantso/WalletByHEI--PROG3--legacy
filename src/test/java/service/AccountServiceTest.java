@@ -132,10 +132,10 @@ public class AccountServiceTest {
     LocalDateTime endDateTime = LocalDateTime.parse("2023-12-02T00:00:00");
 
     /* Stub the accountRepository.getBalanceAtDateTime() method */
-    when(accountRepository.getBalanceAtDateTime(eq(account), any()))
-        .thenReturn(500.0);
+    when(accountRepository.getBalanceAtDateTime(eq(account), any())).thenReturn(500.0);
 
-    Map<LocalDateTime, Double> balanceHistory = accountService.getBalanceHistoryInDateTimeRange(account, startDateTime, endDateTime);
+    Map<LocalDateTime, Double> balanceHistory =
+        accountService.getBalanceHistoryInDateTimeRange(account, startDateTime, endDateTime);
 
     int expectedSize = 1441;
     Assertions.assertEquals(expectedSize, balanceHistory.size());
