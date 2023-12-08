@@ -118,7 +118,7 @@ public class AccountServiceTest {
 
     when(accountRepository.getBalanceAtDateTime(testAccount, dateTimeToCheck)).thenReturn(0.0);
 
-    double balanceAtDateTime = accountService.getBalanceAtDateTime(testAccount, dateTimeToCheck);
+    double balanceAtDateTime = accountService.getCurrentBalance(testAccount, dateTimeToCheck);
     Assertions.assertEquals(0.0, balanceAtDateTime);
   }
 

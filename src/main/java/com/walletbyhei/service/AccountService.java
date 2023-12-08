@@ -73,12 +73,12 @@ public class AccountService {
   }
 
   /* TODO: (Bonus) Create a function that get the balance of the actual account ✅ */
-  public double getCurrentBalance(Account account) {
+  public double getCurrentBalance(Account account, LocalDateTime dateTimeToCheck) {
     LocalDateTime currentDateTime = LocalDateTime.now();
     return accountRepository.getBalanceAtDateTime(account, currentDateTime);
   }
 
-  /* TODO: Create function that can create the balance history of an account in DateTime range */
+  /* TODO: Create function that can create the balance history of an account in DateTime range ✅ */
   public Map<LocalDateTime, Double> getBalanceHistoryInDateTimeRange(
       Account account, LocalDateTime startDateTime, LocalDateTime endDateTime) {
     Map<LocalDateTime, Double> balanceHistory = new HashMap<>();
