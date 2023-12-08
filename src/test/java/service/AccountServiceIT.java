@@ -8,9 +8,12 @@ import com.walletbyhei.model.Transaction;
 import com.walletbyhei.model.TransactionType;
 import com.walletbyhei.repository.AccountRepository;
 import com.walletbyhei.service.AccountService;
+
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,8 +22,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class AccountServiceIT {
-  @InjectMocks private AccountService accountService;
-  @Mock private AccountRepository accountRepository;
+  @InjectMocks
+  private AccountService accountService;
+  @Mock
+  private AccountRepository accountRepository;
 
   @BeforeEach
   public void setUp() {

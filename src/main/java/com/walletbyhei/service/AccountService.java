@@ -1,16 +1,15 @@
 package com.walletbyhei.service;
 
-import com.walletbyhei.model.Account;
-import com.walletbyhei.model.AccountType;
-import com.walletbyhei.model.Transaction;
-import com.walletbyhei.model.TransactionType;
+import com.walletbyhei.model.*;
 import com.walletbyhei.repository.AccountRepository;
+
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -108,8 +107,8 @@ public class AccountService {
     }
 
     /* - Realizing the transfer
-    *  - Update all accounts from the database
-    * */
+     *  - Update all accounts from the database
+     * */
     sourceAccount.setBalance(sourceAccount.getBalance() - amount);
     destinationAccount.setBalance(destinationAccount.getBalance() + amount);
     accountRepository.updateAccount(sourceAccount);
@@ -118,4 +117,7 @@ public class AccountService {
     System.out.println("Transfer done successfully !");
     return true;
   }
+
+  /* TODO: Create a function, different from the second question, which get the current balance of an AR account that
+      receive many transfers from an EUR account  */
 }
