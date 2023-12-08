@@ -18,7 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class AccountServiceTest {
+public class AccountServiceIT {
   @InjectMocks private AccountService accountService;
   @Mock private AccountRepository accountRepository;
 

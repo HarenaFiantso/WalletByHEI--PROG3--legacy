@@ -95,7 +95,7 @@ public class AccountService {
     return balanceHistory;
   }
 
-  /* TODO: Create a function that can do money transfer between two accounts */
+  /* TODO: Create a function that can do money transfer between two accounts ✅ */
   public boolean makeTransfer(Account sourceAccount, Account destinationAccount, double amount) throws SQLException {
     if (sourceAccount.equals(destinationAccount)) {
       System.out.println("An account could not make money transfer for himself");
