@@ -1,3 +1,6 @@
+-- Deleting database if already exists
+DROP DATABASE IF EXISTS wallet_by_hei;
+
 -- Creating database
 SELECT 'CREATE DATABASE wallet_by_hei'
 WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'wallet_by_hei')\gexec
@@ -24,7 +27,7 @@ CREATE TABLE IF NOT EXISTS currency (
 
 -- Creating account table
 CREATE TABLE IF NOT EXISTS account (
-    account_id uuid DEFAULT uuid_generate_v4 (),
+    account_id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
     account_name VARCHAR(255) NOT NULL,
     balance decimal NOT NULL,
     currency_id INT NOT NULL,
@@ -42,7 +45,7 @@ END $$;
 --Creating transaction table
 CREATE TABLE IF NOT EXISTS "transaction" (
     transaction_id SERIAL PRIMARY KEY,
-    account_id INT NOT NULL,
+    account_id UUID NOT NULL,
     label VARCHAR(255) NOT NULL,
     amount decimal NOT NULL,
     transaction_type "transaction_type" NOT NULL,
