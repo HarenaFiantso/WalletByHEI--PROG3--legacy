@@ -25,7 +25,6 @@ public class AccountServiceTest {
   private AccountService accountService;
   @Mock
   private AccountRepository accountRepository;
-  private Account testAccount;
 
   @BeforeEach
   public void setUp() {
