@@ -94,4 +94,28 @@ public class AccountService {
 
     return balanceHistory;
   }
+
+  /* TODO: Create a function that can do money transfer between two accounts */
+  public boolean makeTransfer(Account sourceAccount, Account destinationAccount, double amount) throws SQLException {
+    if (sourceAccount.equals(destinationAccount)) {
+      System.out.println("An account could not make money transfer for himself");
+      return false;
+    }
+
+    if (sourceAccount.getBalance() < amount) {
+      System.out.println("Not enough balance to perform transfer");
+      return false;
+    }
+
+    /* - Realizing the transfer
+    *  - Update all accounts from the database
+    * */
+    sourceAccount.setBalance(sourceAccount.getBalance() - amount);
+    destinationAccount.setBalance(destinationAccount.getBalance() + amount);
+    accountRepository.updateAccount(sourceAccount);
+    accountRepository.updateAccount(destinationAccount);
+
+    System.out.println("Transfer done successfully !");
+    return true;
+  }
 }
