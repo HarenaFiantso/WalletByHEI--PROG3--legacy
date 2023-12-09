@@ -11,9 +11,9 @@ public class ConnectionToDb {
    *   - remove the connectiondb method and just refactor it just using getConnection and closeConnection
    * */
   private static Connection connection;
-  public static final String DB_URL = System.getenv("DB_URL");
-  public static final String DB_USERNAME = System.getenv("DB_USERNAME");
-  public static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
+  public static final String DB_URL = "jdbc:postgresql://localhost:5432/wallet_by_hei";
+  public static final String DB_USERNAME = "postgres";
+  public static final String DB_PASSWORD = "tsy tadidiko";
 
   public static Connection getConnection() {
     if (connection != null) {
