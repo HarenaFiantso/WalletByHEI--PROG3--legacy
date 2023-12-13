@@ -1,4 +1,4 @@
-package com.walletbyhei.model;
+package com.walletbyhei.model.type;
 
 public enum TransactionType {
   CREDIT,

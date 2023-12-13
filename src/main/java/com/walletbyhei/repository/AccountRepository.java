@@ -2,7 +2,7 @@ package com.walletbyhei.repository;
 
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Transaction;
-import com.walletbyhei.model.TransactionType;
+import com.walletbyhei.model.type.TransactionType;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class AccountRepository implements CrudOperations<Account> {
         return new Account();
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
     return null;
   }
@@ -42,7 +42,7 @@ public class AccountRepository implements CrudOperations<Account> {
         accounts.add(account);
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
     return accounts;
   }
@@ -62,7 +62,7 @@ public class AccountRepository implements CrudOperations<Account> {
       }
       statement.executeBatch();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
     return toSave;
   }
@@ -91,9 +91,8 @@ public class AccountRepository implements CrudOperations<Account> {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
-    return null;
   }
 
   @Override
@@ -107,9 +106,8 @@ public class AccountRepository implements CrudOperations<Account> {
       }
       return toDelete;
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
-    return null;
   }
 
   public void updateAccount(Account account) throws SQLException {

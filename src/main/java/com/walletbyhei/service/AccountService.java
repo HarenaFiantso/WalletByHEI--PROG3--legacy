@@ -1,6 +1,8 @@
 package com.walletbyhei.service;
 
 import com.walletbyhei.model.*;
+import com.walletbyhei.model.type.AccountType;
+import com.walletbyhei.model.type.TransactionType;
 import com.walletbyhei.repository.AccountRepository;
 
 import java.sql.SQLException;

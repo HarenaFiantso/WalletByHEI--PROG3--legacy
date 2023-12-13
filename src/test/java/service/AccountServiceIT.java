@@ -3,14 +3,13 @@ package service;
 import static org.mockito.Mockito.*;
 
 import com.walletbyhei.model.Account;
-import com.walletbyhei.model.AccountType;
+import com.walletbyhei.model.type.AccountType;
 import com.walletbyhei.model.Transaction;
-import com.walletbyhei.model.TransactionType;
+import com.walletbyhei.model.type.TransactionType;
 import com.walletbyhei.repository.AccountRepository;
 import com.walletbyhei.service.AccountService;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -123,7 +122,7 @@ public class AccountServiceIT {
 
     when(accountRepository.getBalanceAtDateTime(testAccount, dateTimeToCheck)).thenReturn(0.0);
 
-    double balanceAtDateTime = accountService.getCurrentBalance(testAccount, dateTimeToCheck);
+    double balanceAtDateTime = accountService.getCurrentBalance(testAccount);
     Assertions.assertEquals(0.0, balanceAtDateTime);
   }
 
