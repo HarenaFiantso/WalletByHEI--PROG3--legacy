@@ -1,18 +1,17 @@
 package com.walletbyhei.model;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 public class CurrencyValue {
   private Long currencyValueId;
   private int sourceCurrencyId;
   private int destinationCurrencyId;
-  private double value;
+  private Double value;
   private LocalDate effectiveDate;
 }

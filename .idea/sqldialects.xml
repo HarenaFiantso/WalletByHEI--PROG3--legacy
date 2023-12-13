@@ -8,5 +8,6 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/mock/mock_currency_value.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mock/mock_transaction.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mock/mock_transfert.sql" dialect="PostgreSQL" />
+    <file url="PROJECT" dialect="PostgreSQL" />
   </component>
 </project>

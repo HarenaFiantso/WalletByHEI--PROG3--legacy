@@ -1,10 +1,8 @@
--- Create the account table if not exists
--- Should create account type and currency first
-CREATE TABLE IF NOT EXISTS account (
-    account_id SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS account
+(
+    account_id   SERIAL PRIMARY KEY,
     account_name VARCHAR(255) NOT NULL,
-    balance decimal NOT NULL,
-    currency_id INT NOT NULL,
-    account_type "account_type" NOT NULL,
-    FOREIGN KEY (currency_id) REFERENCES currency(currency_id)
+    currency_id  INT          NOT NULL,
+    account_type account_type NOT NULL DEFAULT 'CASH',
+    FOREIGN KEY (currency_id) REFERENCES currency (currency_id)
 );
