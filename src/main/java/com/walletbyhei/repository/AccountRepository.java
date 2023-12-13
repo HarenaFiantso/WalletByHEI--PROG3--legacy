@@ -139,13 +139,6 @@ public class AccountRepository implements CrudOperations<Account> {
     }
   }
 
-  public void rollbackTransaction() throws SQLException {
-    if (connection != null) {
-      connection.rollback();
-      connection.setAutoCommit(true);
-    }
-  }
-
   public double getBalanceAtDateTime(Account account, LocalDateTime dateTime) {
     List<Transaction> transactions = account.getTransactionList();
     double balance = 0.0;
