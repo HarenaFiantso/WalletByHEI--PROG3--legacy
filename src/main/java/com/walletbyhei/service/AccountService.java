@@ -72,7 +72,7 @@ public class AccountService {
   }
 
   /* TODO: (Bonus) Create a function that get the balance of the actual account ✅ */
-  public double getCurrentBalance(Account account, LocalDateTime dateTimeToCheck) {
+  public double getCurrentBalance(Account account) {
     LocalDateTime currentDateTime = LocalDateTime.now();
     return accountRepository.getBalanceAtDateTime(account, currentDateTime);
   }
