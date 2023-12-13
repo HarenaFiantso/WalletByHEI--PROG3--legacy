@@ -1,8 +1,7 @@
 package service;
 
-import com.walletbyhei.model.Transaction;
 import com.walletbyhei.model.TransferHistory;
-import com.walletbyhei.repository.TransferHistoryRepository;
+import com.walletbyhei.repository.extra.TransferHistoryRepository;
 import com.walletbyhei.service.TransferHistoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

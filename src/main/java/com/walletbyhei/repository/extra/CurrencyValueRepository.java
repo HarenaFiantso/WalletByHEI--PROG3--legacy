@@ -1,4 +1,4 @@
-package com.walletbyhei.repository;
+package com.walletbyhei.repository.extra;
 
 import java.time.LocalDate;
 

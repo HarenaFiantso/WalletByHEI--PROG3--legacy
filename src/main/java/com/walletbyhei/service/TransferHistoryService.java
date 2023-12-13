@@ -1,7 +1,7 @@
 package com.walletbyhei.service;
 
 import com.walletbyhei.model.TransferHistory;
-import com.walletbyhei.repository.TransferHistoryRepository;
+import com.walletbyhei.repository.extra.TransferHistoryRepository;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
