@@ -1,7 +1,6 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
 import com.walletbyhei.dbConnection.ConnectionToDb;
-import com.walletbyhei.model.Account;
 import com.walletbyhei.model.TransferHistory;
 import com.walletbyhei.repository.CrudOperations;
 
