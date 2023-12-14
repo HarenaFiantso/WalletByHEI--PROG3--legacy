@@ -1,7 +1,6 @@
 package com.walletbyhei.repository.extra;
 
 import com.walletbyhei.model.TransferHistory;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

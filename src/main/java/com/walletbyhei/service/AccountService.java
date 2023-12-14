@@ -4,14 +4,12 @@ import com.walletbyhei.model.*;
 import com.walletbyhei.model.type.AccountType;
 import com.walletbyhei.model.type.TransactionType;
 import com.walletbyhei.repository.AccountRepository;
-
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -97,7 +95,8 @@ public class AccountService {
   }
 
   /* TODO: Create a function that can do money transfer between two accounts ✅ */
-  public boolean makeTransfer(Account sourceAccount, Account destinationAccount, double amount) throws SQLException {
+  public boolean makeTransfer(Account sourceAccount, Account destinationAccount, double amount)
+      throws SQLException {
     if (sourceAccount.equals(destinationAccount)) {
       System.out.println("An account could not make money transfer for himself");
       return false;
@@ -121,5 +120,5 @@ public class AccountService {
   }
 
   /* TODO: Create a function, different from the second question, which get the current balance of an AR account that
-      receive many transfers from an EUR account  */
+  receive many transfers from an EUR account  */
 }

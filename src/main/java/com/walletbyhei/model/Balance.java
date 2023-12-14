@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
-public class TransferHistory {
-  private Long transferHistoryId;
-  private int debitTransactionId;
-  private int creditTransactionId;
-  private LocalDateTime transferDate;
+public class Balance {
+  private Long balanceId;
+  private LocalDateTime balanceDateTime;
+  private int accountId;
+  private Double amount;
 }

@@ -6,10 +6,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 public class Currency {
-  /* - Use camelCase as variable notation
-   *  */
   private Long currencyId;
   private String currencyName;
   private String currencyCode;
