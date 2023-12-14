@@ -5,13 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 public class Account {
-  /* TODO: Create an Enum file for the accountType attribute ✅ */
   private Long accountId;
   private String accountName;
   private AccountType accountType;
-  private int currencyId;
+  private List<Transaction> transactionList;
+  private Balance balance;
+  private Currency currency;
 }

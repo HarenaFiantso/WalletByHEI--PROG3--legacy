@@ -1,12 +1,14 @@
 package com.walletbyhei.repository;
 
+import com.walletbyhei.model.Account;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
 public interface CrudOperations<T> {
-  Integer findById(T toFind);
+  Account findById(int toFind);
 
   List<T> findAll();
 

@@ -1,6 +1,7 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
 import com.walletbyhei.dbConnection.ConnectionToDb;
+import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Currency;
 import com.walletbyhei.repository.CrudOperations;
 import java.sql.*;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class CurrencyRepository implements CrudOperations<Currency> {
   @Override
-  public Integer findById(Currency toFind) {
+  public Account findById(int toFind) {
     return null;
   }
 

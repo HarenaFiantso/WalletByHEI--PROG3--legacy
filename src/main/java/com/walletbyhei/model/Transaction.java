@@ -15,5 +15,5 @@ public class Transaction {
   private Double amount;
   private LocalDateTime dateTime;
   private TransactionType transactionType;
-  private int accountId;
+  private Account account;
 }

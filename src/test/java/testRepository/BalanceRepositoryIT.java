@@ -25,7 +25,7 @@ public class BalanceRepositoryIT {
 
   @Test
   public void testDelete() {
-    Balance balanceToDelete = new Balance();
+    Balance balanceToDelete = new Balance(LocalDateTime.now(), transaction.getTransactionId(), 0.0);
     balanceToDelete.setBalanceId(1L);
 
     Balance deletedBalance = balanceRepository.delete(balanceToDelete);

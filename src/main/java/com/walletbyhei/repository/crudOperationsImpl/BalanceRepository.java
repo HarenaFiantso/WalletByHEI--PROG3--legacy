@@ -1,6 +1,7 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
 import com.walletbyhei.dbConnection.ConnectionToDb;
+import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Balance;
 import com.walletbyhei.repository.CrudOperations;
 import java.sql.*;
@@ -9,30 +10,13 @@ import java.util.List;
 
 public class BalanceRepository implements CrudOperations<Balance> {
   @Override
-  public Integer findById(Balance toFind) {
+  public Account findById(int toFind) {
     return null;
   }
 
   @Override
   public List<Balance> findAll() {
-    List<Balance> balances = new ArrayList<>();
-
-    Connection connection = ConnectionToDb.getConnection();
-    String SELECT_ALL_QUERY = "SELECT * FROM balance";
-
-    try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY)) {
-      ResultSet resultSet = statement.executeQuery();
-
-      while (resultSet.next()) {
-        Balance balance = new Balance();
-        balances.add(balance);
-      }
-    } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve all balance : " + e.getMessage());
-    } finally {
-      closeResources(connection, null, null);
-    }
-    return balances;
+    return null;
   }
 
   @Override

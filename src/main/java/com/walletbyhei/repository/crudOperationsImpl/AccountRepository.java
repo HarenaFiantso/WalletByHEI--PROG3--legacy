@@ -9,7 +9,20 @@ import java.util.List;
 
 public class AccountRepository implements CrudOperations<Account> {
   @Override
-  public Integer findById(Account toFind) {
+  public Account findById(int toFind) {
+    String SELECT_BY_ID_QUERY = "SELECT * FROM account WHERE account_id = ?";
+    Connection connection = ConnectionToDb.getConnection();
+
+    try (PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY)) {
+      statement.setLong(1, toFind);
+      ResultSet resultSet = statement.executeQuery();
+
+      if (resultSet.next()) {
+        return new Account();
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
     return null;
   }
 

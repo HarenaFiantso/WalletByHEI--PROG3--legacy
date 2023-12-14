@@ -1,6 +1,7 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
 import com.walletbyhei.dbConnection.ConnectionToDb;
+import com.walletbyhei.model.Account;
 import com.walletbyhei.model.TransferHistory;
 import com.walletbyhei.repository.CrudOperations;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class TransferHistoryRepository implements CrudOperations<TransferHistory> {
   @Override
-  public Integer findById(TransferHistory toFind) {
+  public Account findById(int toFind) {
     return null;
   }
 

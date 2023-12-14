@@ -12,5 +12,5 @@ public class Balance {
   private Long balanceId;
   private LocalDateTime balanceDateTime;
   private Double amount;
-  private int accountId;
+  private Account account;
 }
