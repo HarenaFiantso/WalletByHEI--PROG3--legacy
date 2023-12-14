@@ -3,12 +3,16 @@ package com.walletbyhei.repository.crudOperationsImpl;
 import com.walletbyhei.dbConnection.ConnectionToDb;
 import com.walletbyhei.model.Currency;
 import com.walletbyhei.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CurrencyRepository implements CrudOperations<Currency> {
+  @Override
+  public Integer findById(Currency toFind) {
+    return null;
+  }
+
   @Override
   public List<Currency> findAll() {
     List<Currency> currencies = new ArrayList<>();
@@ -55,8 +59,7 @@ public class CurrencyRepository implements CrudOperations<Currency> {
 
       if (toSave.getCurrencyId() == null) {
         SAVE_QUERY =
-            "INSERT INTO currency (currency_name, currency_code) "
-                + "VALUES(?, ?) RETURNING *";
+            "INSERT INTO currency (currency_name, currency_code) " + "VALUES(?, ?) RETURNING *";
         statement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, toSave.getCurrencyName());
         statement.setString(2, toSave.getCurrencyCode());
@@ -107,7 +110,8 @@ public class CurrencyRepository implements CrudOperations<Currency> {
   }
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();

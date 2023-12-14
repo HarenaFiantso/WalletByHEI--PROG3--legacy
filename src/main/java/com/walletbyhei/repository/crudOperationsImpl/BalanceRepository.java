@@ -9,6 +9,11 @@ import java.util.List;
 
 public class BalanceRepository implements CrudOperations<Balance> {
   @Override
+  public Integer findById(Balance toFind) {
+    return null;
+  }
+
+  @Override
   public List<Balance> findAll() {
     List<Balance> balances = new ArrayList<>();
 

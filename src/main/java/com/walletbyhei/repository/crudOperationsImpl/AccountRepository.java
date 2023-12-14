@@ -9,6 +9,11 @@ import java.util.List;
 
 public class AccountRepository implements CrudOperations<Account> {
   @Override
+  public Integer findById(Account toFind) {
+    return null;
+  }
+
+  @Override
   public List<Account> findAll() {
     List<Account> accounts = new ArrayList<>();
 

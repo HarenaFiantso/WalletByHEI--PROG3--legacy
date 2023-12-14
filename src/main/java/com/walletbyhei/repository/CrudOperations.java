@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.List;
 
 public interface CrudOperations<T> {
+  Integer findById(T toFind);
+
   List<T> findAll();
 
   List<T> saveAll(List<T> toSave);
