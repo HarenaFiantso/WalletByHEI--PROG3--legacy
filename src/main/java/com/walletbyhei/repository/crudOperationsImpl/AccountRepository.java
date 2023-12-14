@@ -3,7 +3,6 @@ package com.walletbyhei.repository.crudOperationsImpl;
 import com.walletbyhei.dbConnection.ConnectionToDb;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +53,8 @@ public class AccountRepository implements CrudOperations<Account> {
       String SAVE_QUERY;
 
       if (toSave.getAccountId() == null) {
-        SAVE_QUERY = "INSERT INTO account (account_name, account_type, currency_id) VALUES (?, ?, ?)";
+        SAVE_QUERY =
+            "INSERT INTO account (account_name, account_type, currency_id) VALUES (?, ?, ?)";
         statement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, String.valueOf(toSave.getAccountName()));
         statement.setString(2, String.valueOf(toSave.getAccountType()));
@@ -63,7 +63,9 @@ public class AccountRepository implements CrudOperations<Account> {
 
         resultSet = statement.getGeneratedKeys();
       } else {
-        SAVE_QUERY = "UPDATE account SET account_name = ?, account_type = ?, currency_id = ? WHERE account_id = ?";
+        SAVE_QUERY =
+            "UPDATE account SET account_name = ?, account_type = ?, currency_id = ? WHERE"
+                + " account_id = ?";
         statement = connection.prepareStatement(SAVE_QUERY);
         statement.setString(1, String.valueOf(toSave.getAccountName()));
         statement.setString(2, String.valueOf(toSave.getAccountType()));
@@ -104,7 +106,8 @@ public class AccountRepository implements CrudOperations<Account> {
   }
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();
