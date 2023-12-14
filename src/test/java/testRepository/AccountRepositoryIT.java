@@ -3,12 +3,11 @@ package testRepository;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.type.AccountType;
 import com.walletbyhei.repository.crudOperationsImpl.AccountRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AccountRepositoryIT {
   private AccountRepository accountRepository;
@@ -65,7 +64,7 @@ public class AccountRepositoryIT {
   @Test
   public void testDelete() {
     Account accountToDelete = new Account();
-    accountToDelete.setAccountId(1L);
+    accountToDelete.setAccountId(3L);
 
     Account deletedAccount = accountRepository.delete(accountToDelete);
 

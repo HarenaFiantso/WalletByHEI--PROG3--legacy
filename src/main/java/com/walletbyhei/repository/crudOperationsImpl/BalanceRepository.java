@@ -1,49 +1,49 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
 import com.walletbyhei.dbConnection.ConnectionToDb;
-import com.walletbyhei.model.Account;
+import com.walletbyhei.model.Balance;
 import com.walletbyhei.repository.CrudOperations;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountRepository implements CrudOperations<Account> {
+public class BalanceRepository implements CrudOperations<Balance> {
   @Override
-  public List<Account> findAll() {
-    List<Account> accounts = new ArrayList<>();
+  public List<Balance> findAll() {
+    List<Balance> balances = new ArrayList<>();
 
     Connection connection = ConnectionToDb.getConnection();
-    String SELECT_ALL_QUERY = "SELECT * FROM account";
+    String SELECT_ALL_QUERY = "SELECT * FROM balance";
 
     try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY)) {
       ResultSet resultSet = statement.executeQuery();
 
       while (resultSet.next()) {
-        Account account = new Account();
-        accounts.add(account);
+        Balance balance = new Balance();
+        balances.add(balance);
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve all account : " + e.getMessage());
+      throw new RuntimeException("Failed to retrieve all balance : " + e.getMessage());
     } finally {
       closeResources(connection, null, null);
     }
-    return accounts;
+    return balances;
   }
 
   @Override
-  public List<Account> saveAll(List<Account> toSave) {
-    List<Account> savedAccounts = new ArrayList<>();
+  public List<Balance> saveAll(List<Balance> toSave) {
+    List<Balance> savedBalances = new ArrayList<>();
 
-    for (Account account : toSave) {
-      Account savedAccount = this.save(account);
-      savedAccounts.add(savedAccount);
+    for (Balance balance : toSave) {
+      Balance savedBalance = this.save(balance);
+      savedBalances.add(savedBalance);
     }
 
-    return savedAccounts;
+    return savedBalances;
   }
 
   @Override
-  public Account save(Account toSave) {
+  public Balance save(Balance toSave) {
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet resultSet = null;
@@ -52,35 +52,35 @@ public class AccountRepository implements CrudOperations<Account> {
       connection = ConnectionToDb.getConnection();
       String SAVE_QUERY;
 
-      if (toSave.getAccountId() == null) {
+      if (toSave.getBalanceId() == null) {
         SAVE_QUERY =
-            "INSERT INTO account (account_name, account_type, currency_id) "
-                + "VALUES(?, CAST(? AS account_type), ?) RETURNING *";
+            "INSERT INTO balance (balance_date_time, amount, account_id) "
+                + "VALUES(?, ?, ?) RETURNING *";
         statement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);
-        statement.setString(1, toSave.getAccountName());
-        statement.setString(2, String.valueOf(toSave.getAccountType()));
-        statement.setInt(3, toSave.getCurrencyId());
+        statement.setTimestamp(1, Timestamp.valueOf(toSave.getBalanceDateTime()));
+        statement.setDouble(2, Double.parseDouble(String.valueOf(toSave.getAmount())));
+        statement.setInt(3, toSave.getAccountId());
         statement.executeUpdate();
 
         resultSet = statement.getGeneratedKeys();
       } else {
         SAVE_QUERY =
-            "UPDATE account "
-                + "SET account_name = ?, account_type = CAST(? AS account_type), currency_id = ? "
-                + "WHERE account_id = ? RETURNING *";
+            "UPDATE balance "
+                + "SET balance_date_time = ?, amount = ?, account_id = ? "
+                + "WHERE balance_id = ? RETURNING *";
         statement = connection.prepareStatement(SAVE_QUERY);
-        statement.setString(1, toSave.getAccountName());
-        statement.setString(2, String.valueOf(toSave.getAccountType()));
-        statement.setInt(3, toSave.getCurrencyId());
-        statement.setLong(4, toSave.getAccountId());
+        statement.setTimestamp(1, Timestamp.valueOf(toSave.getBalanceDateTime()));
+        statement.setDouble(2, toSave.getAmount());
+        statement.setInt(3, toSave.getAccountId());
+        statement.setLong(4, toSave.getBalanceId());
         statement.executeUpdate();
       }
 
       if (resultSet != null && resultSet.next()) {
-        toSave.setAccountId(resultSet.getLong(1));
+        toSave.setBalanceId(resultSet.getLong(1));
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to save account: " + e.getMessage());
+      throw new RuntimeException("Failed to save balance: " + e.getMessage());
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -88,19 +88,19 @@ public class AccountRepository implements CrudOperations<Account> {
   }
 
   @Override
-  public Account delete(Account toDelete) {
+  public Balance delete(Balance toDelete) {
     Connection connection = null;
     PreparedStatement statement = null;
 
     try {
       connection = ConnectionToDb.getConnection();
-      String DELETE_QUERY = "DELETE FROM account WHERE account_id = ?";
+      String DELETE_QUERY = "DELETE FROM balance WHERE balance_id = ?";
       statement = connection.prepareStatement(DELETE_QUERY);
-      statement.setLong(1, toDelete.getAccountId());
+      statement.setLong(1, toDelete.getBalanceId());
       statement.executeUpdate();
 
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to delete account: " + e.getMessage());
+      throw new RuntimeException("Failed to delete balance: " + e.getMessage());
     } finally {
       closeResources(connection, statement, null);
     }
