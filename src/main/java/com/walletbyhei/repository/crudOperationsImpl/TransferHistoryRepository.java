@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransferHistoryRepository implements CrudOperations<TransferHistory> {
+
   @Override
   public Account findById(int toFind) {
     return null;
@@ -64,8 +65,8 @@ public class TransferHistoryRepository implements CrudOperations<TransferHistory
             "INSERT INTO transfer (debit_transaction_id, credit_transaction_id, transfer_date) "
                 + "VALUES(?, ?, ?) RETURNING *";
         statement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);
-        statement.setInt(1, toSave.getDebitTransactionId());
-        statement.setInt(2, toSave.getCreditTransactionId());
+        statement.setString(1, String.valueOf(toSave.getDebitTransaction()));
+        statement.setString(2, String.valueOf(toSave.getCreditTransaction()));
         statement.setTimestamp(3, Timestamp.valueOf(toSave.getTransferDate()));
         statement.executeUpdate();
 
@@ -76,8 +77,8 @@ public class TransferHistoryRepository implements CrudOperations<TransferHistory
                 + "SET debit_transaction_id = ?, credit_transaction_id = ?, transfer_date = ? "
                 + "WHERE transfer_id = ? RETURNING *";
         statement = connection.prepareStatement(SAVE_QUERY);
-        statement.setInt(1, toSave.getDebitTransactionId());
-        statement.setInt(2, toSave.getCreditTransactionId());
+        statement.setString(1, String.valueOf(toSave.getDebitTransaction()));
+        statement.setString(2, String.valueOf(toSave.getCreditTransaction()));
         statement.setTimestamp(3, Timestamp.valueOf(toSave.getTransferDate()));
         statement.setLong(4, toSave.getTransferHistoryId());
         statement.executeUpdate();

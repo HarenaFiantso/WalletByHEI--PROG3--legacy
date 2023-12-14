@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountRepository implements CrudOperations<Account> {
+
   @Override
   public Account findById(int toFind) {
     String SELECT_BY_ID_QUERY = "SELECT * FROM account WHERE account_id = ?";
@@ -77,7 +78,7 @@ public class AccountRepository implements CrudOperations<Account> {
         statement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, toSave.getAccountName());
         statement.setString(2, String.valueOf(toSave.getAccountType()));
-        statement.setInt(3, toSave.getCurrencyId());
+        statement.setInt(3, Math.toIntExact(toSave.getCurrency().getCurrencyId()));
         statement.executeUpdate();
 
         resultSet = statement.getGeneratedKeys();
@@ -89,7 +90,7 @@ public class AccountRepository implements CrudOperations<Account> {
         statement = connection.prepareStatement(SAVE_QUERY);
         statement.setString(1, toSave.getAccountName());
         statement.setString(2, String.valueOf(toSave.getAccountType()));
-        statement.setInt(3, toSave.getCurrencyId());
+        statement.setInt(3, Math.toIntExact(toSave.getCurrency().getCurrencyId()));
         statement.setLong(4, toSave.getAccountId());
         statement.executeUpdate();
       }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BalanceRepository implements CrudOperations<Balance> {
+
   @Override
   public Account findById(int toFind) {
     return null;
@@ -48,7 +49,7 @@ public class BalanceRepository implements CrudOperations<Balance> {
         statement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);
         statement.setTimestamp(1, Timestamp.valueOf(toSave.getBalanceDateTime()));
         statement.setDouble(2, Double.parseDouble(String.valueOf(toSave.getAmount())));
-        statement.setInt(3, toSave.getAccountId());
+        statement.setInt(3, Math.toIntExact(toSave.getAccount().getAccountId()));
         statement.executeUpdate();
 
         resultSet = statement.getGeneratedKeys();
@@ -60,7 +61,7 @@ public class BalanceRepository implements CrudOperations<Balance> {
         statement = connection.prepareStatement(SAVE_QUERY);
         statement.setTimestamp(1, Timestamp.valueOf(toSave.getBalanceDateTime()));
         statement.setDouble(2, toSave.getAmount());
-        statement.setInt(3, toSave.getAccountId());
+        statement.setInt(3, Math.toIntExact(toSave.getAccount().getAccountId()));
         statement.setLong(4, toSave.getBalanceId());
         statement.executeUpdate();
       }

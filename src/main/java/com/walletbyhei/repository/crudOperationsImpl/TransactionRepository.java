@@ -67,7 +67,7 @@ public class TransactionRepository implements CrudOperations<Transaction> {
         statement.setString(1, toSave.getLabel());
         statement.setDouble(2, toSave.getAmount());
         statement.setTimestamp(3, Timestamp.valueOf(toSave.getDateTime()));
-        statement.setInt(4, toSave.getAccountId());
+        statement.setInt(4, Math.toIntExact(toSave.getAccount().getAccountId()));
         statement.setString(5, String.valueOf(toSave.getTransactionType()));
         statement.executeUpdate();
 
@@ -81,7 +81,7 @@ public class TransactionRepository implements CrudOperations<Transaction> {
         statement.setString(1, toSave.getLabel());
         statement.setDouble(2, toSave.getAmount());
         statement.setTimestamp(3, Timestamp.valueOf(toSave.getDateTime()));
-        statement.setInt(4, toSave.getAccountId());
+        statement.setInt(4, Math.toIntExact(toSave.getAccount().getAccountId()));
         statement.setString(5, String.valueOf(toSave.getTransactionType()));
         statement.setLong(6, toSave.getTransactionId());
         statement.executeUpdate();
