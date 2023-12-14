@@ -3,6 +3,7 @@ package com.walletbyhei.repository.crudOperationsImpl;
 import com.walletbyhei.dbConnection.ConnectionToDb;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.repository.CrudOperations;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +55,10 @@ public class AccountRepository implements CrudOperations<Account> {
 
       if (toSave.getAccountId() == null) {
         SAVE_QUERY =
-            "INSERT INTO account (account_name, account_type, currency_id) VALUES (?, ?, ?)";
+            "INSERT INTO account (account_name, account_type, currency_id) " +
+                "VALUES(?, CAST(? AS account_type), ?) RETURNING *";
         statement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);
-        statement.setString(1, String.valueOf(toSave.getAccountName()));
+        statement.setString(1, toSave.getAccountName());
         statement.setString(2, String.valueOf(toSave.getAccountType()));
         statement.setInt(3, toSave.getCurrencyId());
         statement.executeUpdate();
@@ -64,10 +66,11 @@ public class AccountRepository implements CrudOperations<Account> {
         resultSet = statement.getGeneratedKeys();
       } else {
         SAVE_QUERY =
-            "UPDATE account SET account_name = ?, account_type = ?, currency_id = ? WHERE"
-                + " account_id = ?";
+            "UPDATE account " +
+                "SET account_name = ?, account_type = CAST(? AS account_type), currency_id = ? " +
+                "WHERE account_id = ? RETURNING *";
         statement = connection.prepareStatement(SAVE_QUERY);
-        statement.setString(1, String.valueOf(toSave.getAccountName()));
+        statement.setString(1, toSave.getAccountName());
         statement.setString(2, String.valueOf(toSave.getAccountType()));
         statement.setInt(3, toSave.getCurrencyId());
         statement.setLong(4, toSave.getAccountId());

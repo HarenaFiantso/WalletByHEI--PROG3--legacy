@@ -1,3 +1,3 @@
-INSERT INTO account (account_name, balance, currency_id, account_type) values ('Current_Account', 1000000, 2, 'BANK');
-INSERT INTO account (account_name, balance, currency_id, account_type) values ('Saving_Account', 1000, 1, 'BANK');
-INSERT INTO account (account_name, balance, currency_id, account_type) values ('Mobile_Money_Account', 100000, 2, 'MOBILE_MONEY');
+INSERT INTO account (account_name, currency_id, account_type)
+VALUES ('Savings Account', 1, 'CASH'::account_type),
+       ('Checking Account', 2, 'MOBILE_MONEY'::account_type);
