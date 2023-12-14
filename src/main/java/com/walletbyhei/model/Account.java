@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.walletbyhei.model.type.AccountType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor(force=true)
 public class Account {
   /* - Use camelCase as variable notation
    *  - Add some additional attributes
