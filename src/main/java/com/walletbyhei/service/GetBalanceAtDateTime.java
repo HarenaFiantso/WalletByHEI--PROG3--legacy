@@ -10,21 +10,16 @@ import java.util.stream.Collectors;
 
 public class GetBalanceAtDateTime {
 
-  /* TODO: Create a function that can get balance of an account from a specified date
-   *     - Need to debug this
-   * */
   public double getBalanceAtDateTime(Account account, LocalDateTime dateTime) {
     List<Transaction> sortedTransactions = sortTransactionsByDateTime(account.getTransactionList());
 
     double balance = 0;
 
     for (Transaction transaction : sortedTransactions) {
-      if (transaction.getDateTime().isAfter(dateTime)) {
-        break;
-      }
-      if (transaction.getDateTime().isEqual(dateTime)
-          || transaction.getDateTime().isBefore(dateTime)) {
+      if (transaction.getDateTime().isEqual(dateTime) || transaction.getDateTime().isBefore(dateTime)) {
         balance = calculateBalance(transaction, balance);
+      } else {
+        break;
       }
     }
 
@@ -32,10 +27,15 @@ public class GetBalanceAtDateTime {
   }
 
   private double calculateBalance(Transaction transaction, double currentBalance) {
-    if (transaction.getTransactionType() == TransactionType.CREDIT) {
-      return currentBalance + transaction.getAmount();
+    Double transactionAmount = transaction.getAmount();
+    if (transactionAmount != null) {
+      if (transaction.getTransactionType() == TransactionType.CREDIT) {
+        return currentBalance + transactionAmount;
+      } else {
+        return currentBalance - transactionAmount;
+      }
     } else {
-      return currentBalance - transaction.getAmount();
+      throw new IllegalArgumentException("Transaction amount cannot be null");
     }
   }
 
@@ -45,3 +45,4 @@ public class GetBalanceAtDateTime {
         .collect(Collectors.toList());
   }
 }
+
