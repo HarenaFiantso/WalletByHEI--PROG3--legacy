@@ -4,7 +4,6 @@ import com.walletbyhei.dbConnection.ConnectionToDb;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.TransferHistory;
 import com.walletbyhei.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +115,8 @@ public class TransferHistoryRepository implements CrudOperations<TransferHistory
   }
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();

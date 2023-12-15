@@ -4,15 +4,15 @@ import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Transaction;
 import com.walletbyhei.model.type.TransactionType;
 import com.walletbyhei.repository.crudOperationsImpl.AccountRepository;
-
 import java.time.LocalDateTime;
 
 public class PerformTransaction {
 
   /* TODO: Create a function that can do transaction in an account (DEBIT or CREDIT)
-  *     - Need debug session
-  * */
-  public static void performTransaction(Account account, double amount, TransactionType transactionType) {
+   *     - Need debug session
+   * */
+  public static void performTransaction(
+      Account account, double amount, TransactionType transactionType) {
     AccountRepository accountRepository = new AccountRepository();
 
     Transaction transaction = new Transaction();
