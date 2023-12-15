@@ -8,24 +8,20 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GetBalanceAtDateTime {
+public class GetCurrentBalance {
 
-  /* TODO: Create a function that can get balance of an account from a specified date
-   *     - Need to debug this
-   * */
-  public double getBalanceAtDateTime(Account account, LocalDateTime dateTime) {
+  /* TODO: (Bonus) Create a function that get the balance of the actual account */
+  public double getCurrentBalance(Account account) {
+    LocalDateTime currentDateTime = LocalDateTime.now();
     List<Transaction> sortedTransactions = sortTransactionsByDateTime(account.getTransactionList());
 
     double balance = 0;
 
     for (Transaction transaction : sortedTransactions) {
-      if (transaction.getDateTime().isAfter(dateTime)) {
+      if (transaction.getDateTime().isAfter(currentDateTime)) {
         break;
       }
-      if (transaction.getDateTime().isEqual(dateTime)
-          || transaction.getDateTime().isBefore(dateTime)) {
-        balance = calculateBalance(transaction, balance);
-      }
+      balance = calculateBalance(transaction, balance);
     }
 
     return balance;
