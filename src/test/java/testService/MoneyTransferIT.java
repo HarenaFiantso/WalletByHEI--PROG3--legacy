@@ -1,4 +1,4 @@
-package testConnectionToDb.testService;
+package testService;
 
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Balance;
