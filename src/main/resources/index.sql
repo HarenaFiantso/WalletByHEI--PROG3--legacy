@@ -36,6 +36,13 @@ CREATE TABLE IF NOT EXISTS account
     FOREIGN KEY (currency_id) REFERENCES currency (currency_id)
 );
 
+-- Creating category table
+CREATE TABLE IF NOT EXISTS category
+(
+    category_id   SERIAL PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL
+);
+
 -- Creating type for transaction
 DO
 $$
