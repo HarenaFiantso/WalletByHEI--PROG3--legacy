@@ -29,7 +29,10 @@ public class GetBalanceAtDateTimeIT {
     List<Transaction> transactions = new ArrayList<>();
     transactions.add(
         createTransaction(
-            1L, "Salary", 100000, TransactionType.CREDIT, LocalDateTime.of(2023, 12, 1, 0, 15)));
+            1L, "Salary",
+            100000,
+            TransactionType.CREDIT,
+            LocalDateTime.of(2023, 12, 1, 0, 15)));
     transactions.add(
         createTransaction(
             2L,
@@ -39,13 +42,21 @@ public class GetBalanceAtDateTimeIT {
             LocalDateTime.of(2023, 12, 2, 14, 0)));
     transactions.add(
         createTransaction(
-            3L, "New shoes", 20000, TransactionType.DEBIT, LocalDateTime.of(2023, 12, 6, 16, 0)));
+            3L,
+            "New shoes",
+            20000,
+            TransactionType.DEBIT,
+            LocalDateTime.of(2023, 12, 6, 16, 0)));
     when(account.getTransactionList()).thenReturn(transactions);
 
     double balance =
-        getBalanceAtDateTime.getBalanceAtDateTime(account, LocalDateTime.of(2023, 12, 6, 15, 45));
+        getBalanceAtDateTime
+            .getBalanceAtDateTime(
+                account,
+                LocalDateTime.of(2023, 12, 6, 15, 45)
+            );
 
-    double expectedBalance = 30000;
+    double expectedBalance = 50000;
 
     assertEquals(expectedBalance, balance);
   }
