@@ -6,7 +6,6 @@ CREATE OR REPLACE FUNCTION get_category_sum(
 )
     RETURNS TABLE
             (
-                category_id   INT,
                 category_name VARCHAR(50),
                 sum_amount    DOUBLE PRECISION
             )
@@ -15,14 +14,13 @@ AS
 $$
 BEGIN
     RETURN QUERY
-        SELECT c.category_id,
-               c.category_name,
+        SELECT c.category_name,
                COALESCE(SUM(t.amount), 0) AS sum_amount
         FROM category c
                  LEFT JOIN
              "transaction" t
              ON c.category_id = t.category_id AND t.transaction_date_time BETWEEN p_start_date AND p_end_date AND
                 t.account_id = p_account_id
-        GROUP BY c.category_id, c.category_name;
+        GROUP BY c.category_name;
 END;
 $$;
