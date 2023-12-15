@@ -1,25 +1,28 @@
+-- Create a function to get the sum of amounts in each category within a date range
 CREATE OR REPLACE FUNCTION get_category_sum(
-    category_account_id INT,
-    start_datetime TIMESTAMP,
-    end_datetime TIMESTAMP
+    p_account_id INT,
+    p_start_date TIMESTAMP,
+    p_end_date TIMESTAMP
 )
-    RETURNS TABLE (transaction_category VARCHAR, total_amount DECIMAL)
-    LANGUAGE PLPGSQL
+    RETURNS TABLE
+            (
+                category_id   INT,
+                category_name VARCHAR(50),
+                sum_amount    DOUBLE PRECISION
+            )
+    LANGUAGE plpgsql
 AS
 $$
 BEGIN
     RETURN QUERY
-        SELECT
-            "transaction".transaction_category,
-            COALESCE(SUM("transaction".amount), 0) AS total_amount
-        FROM
-            "transaction"
-        WHERE
-                "transaction".account_id = category_account_id
-          AND "transaction".transaction_date_time BETWEEN start_datetime AND end_datetime
-        GROUP BY
-            "transaction".transaction_category;
-
-    RETURN;
+        SELECT c.category_id,
+               c.category_name,
+               COALESCE(SUM(t.amount), 0) AS sum_amount
+        FROM category c
+                 LEFT JOIN
+             "transaction" t
+             ON c.category_id = t.category_id AND t.transaction_date_time BETWEEN p_start_date AND p_end_date AND
+                t.account_id = p_account_id
+        GROUP BY c.category_id, c.category_name;
 END;
 $$;
