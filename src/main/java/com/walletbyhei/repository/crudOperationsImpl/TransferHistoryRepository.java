@@ -1,52 +1,101 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
-import com.walletbyhei.dbConnection.ConnectionToDb;
-import com.walletbyhei.model.Account;
+import com.walletbyhei.database.ConnectionToDb;
 import com.walletbyhei.model.TransferHistory;
 import com.walletbyhei.repository.CrudOperations;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TransferHistoryRepository implements CrudOperations<TransferHistory> {
+  private static final String TRANSFER_HISTORY_ID_COLUMN = "transfer_history_id";
+  private static final String TRANSFER_DATE_COLUMN = "transfer_date";
+  private static final String DEBIT_TRANSACTION_ID_COLUMN = "debit_transaction_id";
+  private static final String CREDIT_TRANSACTION_ID_COLUMN = "credit_transaction_id";
+
+  private static final String SELECT_BY_ID_QUERY =
+      "SELECT * FROM transfer_history WHERE transfer_history_id = ?";
+  private static final String SELECT_ALL_QUERY = "SELECT * FROM transfer_history";
+  private static final String INSERT_QUERY =
+      "INSERT INTO transfer_history (transfer_date, debit_transaction_id, credit_transaction_id)"
+          + " VALUES (?, ?, ?) RETURNING *";
+  private static final String UPDATE_QUERY =
+      "UPDATE transfer_history SET transfer_date = ?, debit_transaction_id = ?,"
+          + " credit_transaction_id = ? WHERE transfer_history_id = ? RETURNING *";
+  private static final String DELETE_QUERY =
+      "DELETE FROM transfer_history WHERE transfer_history_id = ?";
+
+  /* ===== Additional Query(ies) ===== */
+  private static final String SELECT_BY_TRANSFER_DATE_RANGE =
+      "SELECT * FROM transfer_history WHERE transfer_date BETWEEN ? AND ?";
 
   @Override
-  public Account findById(int toFind) {
-    return null;
+  public TransferHistory findById(Long toFind) {
+    TransferHistory transferHistory = null;
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+    try {
+      connection = ConnectionToDb.getConnection();
+
+      statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+      statement.setLong(1, toFind);
+
+      resultSet = statement.executeQuery();
+
+      if (resultSet.next()) {
+        transferHistory = new TransferHistory();
+        transferHistory.setTransferHistoryId(resultSet.getLong(TRANSFER_HISTORY_ID_COLUMN));
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Failed to retrieve account : " + e.getMessage());
+    } finally {
+      closeResources(connection, statement, resultSet);
+    }
+    return transferHistory;
   }
 
   @Override
   public List<TransferHistory> findAll() {
     List<TransferHistory> transferHistories = new ArrayList<>();
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
 
-    Connection connection = ConnectionToDb.getConnection();
-    String SELECT_ALL_QUERY = "SELECT * FROM transfer";
+    try {
+      connection = ConnectionToDb.getConnection();
 
-    try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY)) {
-      ResultSet resultSet = statement.executeQuery();
+      statement = connection.prepareStatement(SELECT_ALL_QUERY);
+      resultSet = statement.executeQuery();
 
       while (resultSet.next()) {
         TransferHistory transferHistory = new TransferHistory();
+        transferHistory.setTransferHistoryId(resultSet.getLong(TRANSFER_HISTORY_ID_COLUMN));
+        transferHistory.setTransferDate(resultSet.getTimestamp(TRANSFER_DATE_COLUMN));
+        transferHistory.setDebitTransactionId(resultSet.getInt(DEBIT_TRANSACTION_ID_COLUMN));
+        transferHistory.setCreditTransactionId(resultSet.getInt(CREDIT_TRANSACTION_ID_COLUMN));
+
         transferHistories.add(transferHistory);
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve all transfer History : " + e.getMessage());
+      throw new RuntimeException("Failed to retrieve transfer history : " + e.getMessage());
     } finally {
-      closeResources(connection, null, null);
+      closeResources(connection, statement, resultSet);
     }
     return transferHistories;
   }
 
   @Override
   public List<TransferHistory> saveAll(List<TransferHistory> toSave) {
-    List<TransferHistory> savedTransfers = new ArrayList<>();
-
-    for (TransferHistory transferHistory : toSave) {
-      TransferHistory savedTransfer = this.save(transferHistory);
-      savedTransfers.add(savedTransfer);
-    }
-
-    return savedTransfers;
+    return toSave.stream()
+        .filter(Objects::nonNull)
+        .map(this::save)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -55,63 +104,64 @@ public class TransferHistoryRepository implements CrudOperations<TransferHistory
     PreparedStatement statement = null;
     ResultSet resultSet = null;
 
+    String QUERY;
+    boolean isNewTransferHistory = toSave.getTransferHistoryId() == null;
+
     try {
       connection = ConnectionToDb.getConnection();
-      String SAVE_QUERY;
-
-      if (toSave.getTransferHistoryId() == null) {
-        SAVE_QUERY =
-            "INSERT INTO transfer (debit_transaction_id, credit_transaction_id, transfer_date) "
-                + "VALUES(?, ?, ?) RETURNING *";
-        statement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);
-        statement.setString(1, String.valueOf(toSave.getDebitTransaction()));
-        statement.setString(2, String.valueOf(toSave.getCreditTransaction()));
-        statement.setTimestamp(3, Timestamp.valueOf(toSave.getTransferDate()));
-        statement.executeUpdate();
-
-        resultSet = statement.getGeneratedKeys();
+      if (isNewTransferHistory) {
+        QUERY = INSERT_QUERY;
+        statement = connection.prepareStatement(QUERY, Statement.RETURN_GENERATED_KEYS);
+        statement.setTimestamp(1, toSave.getTransferDate());
+        statement.setInt(2, toSave.getDebitTransactionId());
+        statement.setInt(3, toSave.getCreditTransactionId());
       } else {
-        SAVE_QUERY =
-            "UPDATE transfer "
-                + "SET debit_transaction_id = ?, credit_transaction_id = ?, transfer_date = ? "
-                + "WHERE transfer_id = ? RETURNING *";
-        statement = connection.prepareStatement(SAVE_QUERY);
-        statement.setString(1, String.valueOf(toSave.getDebitTransaction()));
-        statement.setString(2, String.valueOf(toSave.getCreditTransaction()));
-        statement.setTimestamp(3, Timestamp.valueOf(toSave.getTransferDate()));
+        QUERY = UPDATE_QUERY;
+        statement = connection.prepareStatement(QUERY);
+        statement.setTimestamp(1, toSave.getTransferDate());
+        statement.setInt(2, toSave.getDebitTransactionId());
+        statement.setInt(3, toSave.getCreditTransactionId());
         statement.setLong(4, toSave.getTransferHistoryId());
-        statement.executeUpdate();
       }
 
-      if (resultSet != null && resultSet.next()) {
-        toSave.setTransferHistoryId(resultSet.getLong(1));
+      boolean isResultSet = statement.execute();
+
+      if (isResultSet) {
+        resultSet = statement.getResultSet();
+
+        if (resultSet.next()) {
+          TransferHistory savedTransferHistory = new TransferHistory();
+          savedTransferHistory.setTransferDate(resultSet.getTimestamp(TRANSFER_DATE_COLUMN));
+          savedTransferHistory.setDebitTransactionId(resultSet.getInt(DEBIT_TRANSACTION_ID_COLUMN));
+          savedTransferHistory.setCreditTransactionId(
+              resultSet.getInt(CREDIT_TRANSACTION_ID_COLUMN));
+
+          return savedTransferHistory;
+        }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to save transfer History : " + e.getMessage());
+      throw new RuntimeException("Failed to save transfer history : " + e.getMessage());
     } finally {
       closeResources(connection, statement, resultSet);
     }
-    return toSave;
+    return null;
   }
 
   @Override
-  public TransferHistory delete(TransferHistory toDelete) {
+  public void delete(TransferHistory toDelete) {
     Connection connection = null;
     PreparedStatement statement = null;
 
     try {
       connection = ConnectionToDb.getConnection();
-      String DELETE_QUERY = "DELETE FROM transfer WHERE transfer_id = ?";
       statement = connection.prepareStatement(DELETE_QUERY);
       statement.setLong(1, toDelete.getTransferHistoryId());
-      statement.executeUpdate();
 
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to delete transfer history : " + e.getMessage());
+      throw new RuntimeException("Failed to delete transfer history :" + e.getMessage());
     } finally {
       closeResources(connection, statement, null);
     }
-    return toDelete;
   }
 
   @Override
@@ -128,7 +178,42 @@ public class TransferHistoryRepository implements CrudOperations<TransferHistory
         connection.close();
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to close resources: " + e.getMessage());
+      throw new RuntimeException(e);
     }
+  }
+
+  public List<TransferHistory> getTransferHistoryInInterval(
+      LocalDateTime startDate, LocalDateTime endDate) {
+    List<TransferHistory> transferHistories = new ArrayList<>();
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+    try {
+      connection = ConnectionToDb.getConnection();
+
+      statement = connection.prepareStatement(SELECT_BY_TRANSFER_DATE_RANGE);
+      statement.setTimestamp(1, Timestamp.valueOf(startDate));
+      statement.setTimestamp(2, Timestamp.valueOf(endDate));
+
+      resultSet = statement.executeQuery();
+
+      while (resultSet.next()) {
+        TransferHistory transferHistory = new TransferHistory();
+        transferHistory.setTransferHistoryId(resultSet.getLong(TRANSFER_HISTORY_ID_COLUMN));
+        transferHistory.setTransferDate(resultSet.getTimestamp(TRANSFER_DATE_COLUMN));
+        transferHistory.setDebitTransactionId(resultSet.getInt(DEBIT_TRANSACTION_ID_COLUMN));
+        transferHistory.setCreditTransactionId(resultSet.getInt(CREDIT_TRANSACTION_ID_COLUMN));
+
+        transferHistories.add(transferHistory);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(
+          "Failed to retrieve transfer history by date range : " + e.getMessage());
+    } finally {
+      closeResources(connection, statement, resultSet);
+    }
+
+    return transferHistories;
   }
 }

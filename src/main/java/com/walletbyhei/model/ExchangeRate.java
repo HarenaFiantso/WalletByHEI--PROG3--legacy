@@ -8,10 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
-public class Balance {
-  private Long balanceId;
-  private LocalDateTime balanceDateTime;
-  private LocalDateTime balanceLastUpdate;
-  private Double amount;
-  private int accountId;
+public class ExchangeRate {
+  private LocalDateTime dateTime;
+  private double rate;
+  private int weight;
 }

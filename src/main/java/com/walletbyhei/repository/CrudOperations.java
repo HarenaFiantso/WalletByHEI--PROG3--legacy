@@ -1,13 +1,12 @@
 package com.walletbyhei.repository;
 
-import com.walletbyhei.model.Account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
 public interface CrudOperations<T> {
-  Account findById(int toFind);
+  T findById(Long toFind);
 
   List<T> findAll();
 
@@ -15,7 +14,7 @@ public interface CrudOperations<T> {
 
   T save(T toSave);
 
-  T delete(T toDelete);
+  void delete(T toDelete);
 
   void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet);
 }

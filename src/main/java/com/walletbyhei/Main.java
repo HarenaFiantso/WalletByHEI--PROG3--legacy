@@ -1,6 +1,6 @@
 package com.walletbyhei;
 
-import com.walletbyhei.dbConnection.ConnectionToDb;
+import com.walletbyhei.database.ConnectionToDb;
 
 public class Main {
   public static void main(String[] args) {

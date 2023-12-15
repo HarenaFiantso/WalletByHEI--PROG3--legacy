@@ -1,129 +1,174 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
-import com.walletbyhei.dbConnection.ConnectionToDb;
-import com.walletbyhei.model.Account;
+import com.walletbyhei.database.ConnectionToDb;
 import com.walletbyhei.model.Category;
-import com.walletbyhei.model.Transaction;
+import com.walletbyhei.model.type.TransactionType;
 import com.walletbyhei.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CategoryRepository implements CrudOperations<Category> {
-    @Override
-    public Account findById(int toFind) {
-        return null;
+  private static final String CATEGORY_ID_COLUMN = "category_id";
+  private static final String CATEGORY_NAME_COLUMN = "category_name";
+  private static final String TRANSACTION_TYPE_COLUMN = "transaction_type";
+
+  private static final String SELECT_BY_ID_QUERY = "SELECT * FROM category WHERE category_id = ?";
+  private static final String SELECT_ALL_QUERY = "SELECT * FROM category";
+  private static final String INSERT_QUERY =
+      "INSERT INTO category (category_name, transaction_type) VALUES (?, CAST(? AS"
+          + " transaction_type)) RETURNING *";
+  private static final String UPDATE_QUERY =
+      "UPDATE category SET category_name = ?, transaction_type = CAST(? AS transaction_type)"
+          + " WHERE category_id = ? RETURNING *";
+  private static final String DELETE_QUERY = "DELETE FROM category WHERE category_id = ?";
+
+  @Override
+  public Category findById(Long toFind) {
+    Category category = null;
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+    try {
+      connection = ConnectionToDb.getConnection();
+
+      statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
+      statement.setLong(1, toFind);
+
+      resultSet = statement.executeQuery();
+
+      if (resultSet.next()) {
+        category = new Category();
+        category.setCategoryId(resultSet.getLong(CATEGORY_ID_COLUMN));
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Failed to retrieve category : " + e.getMessage());
+    } finally {
+      closeResources(connection, statement, resultSet);
     }
+    return category;
+  }
 
-    @Override
-    public List<Category> findAll() {
-        List<Category> categories = new ArrayList<>();
+  @Override
+  public List<Category> findAll() {
+    List<Category> categories = new ArrayList<>();
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
 
-        Connection connection = ConnectionToDb.getConnection();
-        String SELECT_ALL_QUERY = "SELECT * FROM category";
+    try {
+      connection = ConnectionToDb.getConnection();
 
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY)) {
-            ResultSet resultSet = statement.executeQuery();
+      statement = connection.prepareStatement(SELECT_ALL_QUERY);
+      resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                Category category = new Category();
-                categories.add(category);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to retrieve all category : " + e.getMessage());
-        } finally {
-            closeResources(connection, null, null);
+      while (resultSet.next()) {
+        Category category = new Category();
+        category.setCategoryId(resultSet.getLong(CATEGORY_ID_COLUMN));
+        category.setCategoryName(resultSet.getString(CATEGORY_NAME_COLUMN));
+        category.setTransactionType(
+            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+
+        categories.add(category);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Failed to retrieve category : " + e.getMessage());
+    } finally {
+      closeResources(connection, statement, resultSet);
+    }
+    return categories;
+  }
+
+  @Override
+  public List<Category> saveAll(List<Category> toSave) {
+    return toSave.stream()
+        .filter(Objects::nonNull)
+        .map(this::save)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public Category save(Category toSave) {
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+    String QUERY;
+    boolean isNewCategory = toSave.getCategoryId() == null;
+
+    try {
+      connection = ConnectionToDb.getConnection();
+      if (isNewCategory) {
+        QUERY = INSERT_QUERY;
+        statement = connection.prepareStatement(QUERY, Statement.RETURN_GENERATED_KEYS);
+        statement.setString(1, toSave.getCategoryName());
+        statement.setString(2, String.valueOf(toSave.getTransactionType()));
+      } else {
+        QUERY = UPDATE_QUERY;
+        statement = connection.prepareStatement(QUERY);
+        statement.setString(1, toSave.getCategoryName());
+        statement.setString(2, String.valueOf(toSave.getTransactionType()));
+        statement.setLong(4, toSave.getCategoryId());
+      }
+
+      boolean isResultSet = statement.execute();
+
+      if (isResultSet) {
+        resultSet = statement.getResultSet();
+
+        if (resultSet.next()) {
+          Category savedCategory = new Category();
+          savedCategory.setCategoryName(resultSet.getString(CATEGORY_NAME_COLUMN));
+          savedCategory.setTransactionType(
+              TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+
+          return savedCategory;
         }
-        return categories;
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Failed to save category : " + e.getMessage());
+    } finally {
+      closeResources(connection, statement, resultSet);
     }
+    return null;
+  }
 
-    @Override
-    public List<Category> saveAll(List<Category> toSave) {
-        List<Category> savedCategories = new ArrayList<>();
+  @Override
+  public void delete(Category toDelete) {
+    Connection connection = null;
+    PreparedStatement statement = null;
 
-        for (Category category : toSave) {
-            Category savedCategory = this.save(category);
-            savedCategories.add(savedCategory);
-        }
+    try {
+      connection = ConnectionToDb.getConnection();
+      statement = connection.prepareStatement(DELETE_QUERY);
+      statement.setLong(1, toDelete.getCategoryId());
 
-        return savedCategories;
+    } catch (SQLException e) {
+      throw new RuntimeException("Failed to delete category :" + e.getMessage());
+    } finally {
+      closeResources(connection, statement, null);
     }
+  }
 
-    @Override
-    public Category save(Category toSave) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = ConnectionToDb.getConnection();
-            String SAVE_QUERY;
-
-            if (toSave.getCategoryId() == null) {
-                SAVE_QUERY =
-                        "INSERT INTO category (category_name) VALUES(?) RETURNING *";
-                statement = connection.prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);
-                statement.setString(1, toSave.getCategoryName());
-                statement.executeUpdate();
-
-                resultSet = statement.getGeneratedKeys();
-            } else {
-                SAVE_QUERY =
-                        "UPDATE category "
-                                + "SET category_name = ? "
-                                + "WHERE category_id = ? RETURNING *";
-                statement = connection.prepareStatement(SAVE_QUERY);
-                statement.setString(1, toSave.getCategoryName());
-                statement.setLong(2, toSave.getCategoryId());
-                statement.executeUpdate();
-            }
-
-            if (resultSet != null && resultSet.next()) {
-                toSave.setCategoryId(resultSet.getLong(1));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to save category: " + e.getMessage());
-        } finally {
-            closeResources(connection, statement, resultSet);
-        }
-        return toSave;
+  @Override
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
+    try {
+      if (resultSet != null) {
+        resultSet.close();
+      }
+      if (statement != null) {
+        statement.close();
+      }
+      if (connection != null) {
+        connection.close();
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
-
-    @Override
-    public Category delete(Category toDelete) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-
-        try {
-            connection = ConnectionToDb.getConnection();
-            String DELETE_QUERY = "DELETE FROM category WHERE category_id = ?";
-            statement = connection.prepareStatement(DELETE_QUERY);
-            statement.setLong(1, toDelete.getCategoryId());
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to delete category: " + e.getMessage());
-        } finally {
-            closeResources(connection, statement, null);
-        }
-        return toDelete;
-    }
-
-    @Override
-    public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
-        try {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to close resources: " + e.getMessage());
-        }
-    }
+  }
 }
