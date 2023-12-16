@@ -1,0 +1,12 @@
+INSERT INTO category (category_name) values ('Food & Drinks');
+INSERT INTO category (category_name) values ('Shopping');
+INSERT INTO category (category_name) values ('Housing');
+INSERT INTO category (category_name) values ('Transportation');
+INSERT INTO category (category_name) values ('Vehicle');
+INSERT INTO category (category_name) values ('Life & Entertainment');
+INSERT INTO category (category_name) values ('Communication & PC');
+INSERT INTO category (category_name) values ('Financial expenses');
+INSERT INTO category (category_name) values ('Investments');
+INSERT INTO category (category_name) values ('Income');
+INSERT INTO category (category_name) values ('Others');
+INSERT INTO category (category_name) values ('Unknown');
