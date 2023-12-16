@@ -13,9 +13,13 @@ public class ConnectionToDb {
   public static Connection getConnection() {
     try {
       if (connection == null || connection.isClosed()) {
-        String DB_URL = System.getenv("DB_URL");
+        /* String DB_URL = System.getenv("DB_URL");
         String DB_USERNAME = System.getenv("DB_USERNAME");
-        String DB_PASSWORD = System.getenv("DB_PASSWORD");
+        String DB_PASSWORD = System.getenv("DB_PASSWORD"); */
+
+        String DB_URL = "jdbc:postgresql://localhost:5432/wallet_by_hei";
+        String DB_USERNAME = "postgres";
+        String DB_PASSWORD = "tsy tadidiko";
 
         try {
           connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);

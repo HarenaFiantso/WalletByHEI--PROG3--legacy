@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 public class TransferHistory {
   private Long transferHistoryId;
-  private Account debitTransaction;
-  private Account creditTransaction;
+  private Transaction debitTransaction;
+  private Transaction creditTransaction;
   private Double amount;
   private LocalDateTime transferDate;
 }
