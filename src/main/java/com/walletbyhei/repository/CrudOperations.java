@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 public interface CrudOperations<T> {
-  Account findById(int toFind);
+  Account findById(T toFind);
 
   List<T> findAll();
 
