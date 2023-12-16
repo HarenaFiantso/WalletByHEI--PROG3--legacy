@@ -24,7 +24,7 @@ public class AccountRepository implements CrudOperations<Account> {
   private static final String DELETE_QUERY = "DELETE FROM account WHERE account_id = ?";
 
   @Override
-  public Account findById(long toFind) {
+  public Account findById(Long toFind) {
     Account account = null;
     Connection connection = null;
     PreparedStatement statement = null;
