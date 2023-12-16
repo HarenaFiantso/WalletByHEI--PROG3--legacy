@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 public class CurrencyValue {
   private Long currencyValueId;
-  private int sourceCurrencyId;
-  private int destinationCurrencyId;
-  private Double value;
-  private LocalDate effectiveDate;
+  private LocalDate currencyValueDate;
+  private Double exchangeRate;
+  private Currency sourceCurrencyId;
+  private Currency destinationCurrencyId;
 }

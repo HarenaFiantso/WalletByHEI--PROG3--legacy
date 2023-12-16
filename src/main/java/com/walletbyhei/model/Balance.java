@@ -11,22 +11,7 @@ import lombok.NoArgsConstructor;
 public class Balance {
   private Long balanceId;
   private LocalDateTime balanceDateTime;
+  private LocalDateTime balanceLastUpdate;
   private Double amount;
   private Account account;
-
-  public Double getBalance() {
-    return this.amount;
-  }
-
-  public void credit(double amount) {
-    this.amount += amount;
-  }
-
-  public void debit(double amount) {
-    if (this.amount >= amount) {
-      this.amount -= amount;
-    } else {
-      throw new RuntimeException("Insufficient funds");
-    }
-  }
 }

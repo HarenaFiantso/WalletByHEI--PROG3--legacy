@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 public class Transaction {
   private Long transactionId;
-  private String label;
-  private Double amount;
-  private LocalDateTime dateTime;
+  private LocalDateTime transactionDate;
   private TransactionType transactionType;
+  private Double amount;
+  private String reason;
   private Account account;
+  private Category category;
 }
