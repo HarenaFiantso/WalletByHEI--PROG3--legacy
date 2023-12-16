@@ -1,2 +1,0 @@
-INSERT INTO transfer (debit_transaction_id, credit_transaction_id, transfer_date) values (1, 2, '2023-12-07 08:32:15');
-INSERT INTO transfer (debit_transaction_id, credit_transaction_id, transfer_date) values (2, 1, '2023-12-07 08:32:15');

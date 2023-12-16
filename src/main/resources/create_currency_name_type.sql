@@ -1,1 +1,0 @@
-CREATE TYPE currency_name AS ENUM ('Euro', 'Ariary');

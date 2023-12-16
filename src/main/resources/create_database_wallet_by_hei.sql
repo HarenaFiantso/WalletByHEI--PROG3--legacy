@@ -1,1 +1,0 @@
-CREATE DATABASE wallet_by_hei;

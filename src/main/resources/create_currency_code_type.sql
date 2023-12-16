@@ -1,1 +1,0 @@
-CREATE TYPE currency_code AS ENUM ('EUR', 'MGA');

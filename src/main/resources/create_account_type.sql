@@ -1,1 +1,0 @@
-CREATE TYPE account_type AS ENUM ('BANK', 'CASH', 'MOBILE MONEY');
