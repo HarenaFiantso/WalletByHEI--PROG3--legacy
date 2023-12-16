@@ -3,10 +3,7 @@ package com.walletbyhei.repository.crudOperationsImpl;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.type.AccountType;
 import org.junit.jupiter.api.*;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +14,13 @@ import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AccountRepositoryIT {
+  /* TODO: Add additional tests assertions */
 
   @Mock
   private AccountRepository accountRepository;
+
+  @InjectMocks
+  private AccountRepository accountRepositoryUnderTest;
 
   @Captor
   private ArgumentCaptor<Account> accountCaptor;
@@ -72,6 +73,19 @@ public class AccountRepositoryIT {
     assertEquals("Mock Account", savedAccount.getAccountName());
     assertEquals(AccountType.CASH, savedAccount.getAccountType());
     assertEquals(1, savedAccount.getCurrencyId());
+  }
+
+  @Test
+  public void testSaveAll() {
+    List<Account> mockAccounts = createMockAccountList();
+
+    when(accountRepository.save(any(Account.class))).thenAnswer(invocation -> {
+      return invocation.<Account>getArgument(0);
+    });
+
+    List<Account> savedAccounts = accountRepositoryUnderTest.saveAll(mockAccounts);
+
+    assertNotNull(savedAccounts);
   }
 
   @Test

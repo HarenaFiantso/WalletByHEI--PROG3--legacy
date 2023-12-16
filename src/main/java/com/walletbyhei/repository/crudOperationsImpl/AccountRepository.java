@@ -4,12 +4,11 @@ import com.walletbyhei.dbConnection.ConnectionToDb;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.type.AccountType;
 import com.walletbyhei.repository.CrudOperations;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AccountRepository implements CrudOperations<Account> {
@@ -17,6 +16,12 @@ public class AccountRepository implements CrudOperations<Account> {
   private static final String ACCOUNT_NAME_COLUMN = "account_name";
   private static final String ACCOUNT_TYPE_COLUMN = "account_type";
   private static final String CURRENCY_ID_COLUMN = "currency_id";
+
+  private static final String SELECT_BY_ID_QUERY = "SELECT * FROM account WHERE account_id = ?";
+  private static final String SELECT_ALL_QUERY = "SELECT * FROM account";
+  private static final String INSERT_QUERY = "INSERT INTO account (account_name, account_type, currency_id) VALUES (?, CAST(? AS account_type), ?) RETURNING *";
+  private static final String UPDATE_QUERY = "UPDATE account SET account_name = ?, account_type = CAST(? AS account_type), currency_id = ? WHERE account_id = ? RETURNING *";
+  private static final String DELETE_QUERY = "DELETE FROM account WHERE account_id = ?";
 
   @Override
   public Account findById(long toFind) {
@@ -28,8 +33,7 @@ public class AccountRepository implements CrudOperations<Account> {
     try {
       connection = ConnectionToDb.getConnection();
 
-      String QUERY = "SELECT * FROM account WHERE account_id = ?";
-      statement = connection.prepareStatement(QUERY);
+      statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
       statement.setLong(1, toFind);
 
       resultSet = statement.executeQuery();
@@ -56,8 +60,7 @@ public class AccountRepository implements CrudOperations<Account> {
     try {
       connection = ConnectionToDb.getConnection();
 
-      String QUERY = "SELECT * FROM account";
-      statement = connection.prepareStatement(QUERY);
+      statement = connection.prepareStatement(SELECT_ALL_QUERY);
       resultSet = statement.executeQuery();
 
       while (resultSet.next()) {
@@ -79,7 +82,11 @@ public class AccountRepository implements CrudOperations<Account> {
 
   @Override
   public List<Account> saveAll(List<Account> toSave) {
-    return toSave.stream().map(this::save).collect(Collectors.toList());
+    return toSave.stream()
+        .filter(Objects::nonNull)
+        .map(this::save)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -94,19 +101,19 @@ public class AccountRepository implements CrudOperations<Account> {
     try {
       connection = ConnectionToDb.getConnection();
       if (isNewAccount) {
-        QUERY =
-            "INSERT INTO account (account_name, account_type, currency_id) VALUES (?, CAST(? AS"
-                + " account_type), ?) RETURNING *";
+        QUERY = INSERT_QUERY;
+        statement = connection.prepareStatement(QUERY, Statement.RETURN_GENERATED_KEYS);
+        statement.setString(1, toSave.getAccountName());
+        statement.setString(2, String.valueOf(toSave.getAccountType()));
+        statement.setInt(3, toSave.getCurrencyId());
       } else {
-        QUERY =
-            "UPDATE account SET account_name = ?, account_type = CAST(? AS account_type),"
-                + " currency_id = ? WHERE account_id = ? RETURNING *";
+        QUERY = UPDATE_QUERY;
+        statement = connection.prepareStatement(QUERY);
+        statement.setString(1, toSave.getAccountName());
+        statement.setString(2, String.valueOf(toSave.getAccountType()));
+        statement.setInt(3, toSave.getCurrencyId());
+        statement.setLong(4, toSave.getAccountId());
       }
-
-      statement = connection.prepareStatement(QUERY);
-      statement.setString(1, toSave.getAccountName());
-      statement.setString(2, String.valueOf(toSave.getAccountType()));
-      statement.setInt(3, toSave.getCurrencyId());
 
       boolean isResultSet = statement.execute();
 
@@ -116,15 +123,14 @@ public class AccountRepository implements CrudOperations<Account> {
         if (resultSet.next()) {
           Account savedAccount = new Account();
           savedAccount.setAccountId(resultSet.getLong(ACCOUNT_ID_COLUMN));
-          savedAccount.setAccountType(
-              AccountType.valueOf(resultSet.getString(ACCOUNT_TYPE_COLUMN)));
+          savedAccount.setAccountType(AccountType.valueOf(resultSet.getString(ACCOUNT_TYPE_COLUMN)));
           savedAccount.setCurrencyId(resultSet.getInt(CURRENCY_ID_COLUMN));
 
           return savedAccount;
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to save account : " + e.getMessage());
+      throw new RuntimeException("Failed to save account: " + e.getMessage());
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -132,27 +138,20 @@ public class AccountRepository implements CrudOperations<Account> {
   }
 
   @Override
-  public Account delete(Account toDelete) {
+  public void delete(Account toDelete) {
     Connection connection = null;
     PreparedStatement statement = null;
 
     try {
       connection = ConnectionToDb.getConnection();
-      String QUERY = "DELETE FROM account WHERE account_id = ?";
-      statement = connection.prepareStatement(QUERY);
+      statement = connection.prepareStatement(DELETE_QUERY);
       statement.setLong(1, toDelete.getAccountId());
 
-      int rowsAffected = statement.executeUpdate();
-
-      if (rowsAffected > 0) {
-        return toDelete;
-      }
     } catch (SQLException e) {
       throw new RuntimeException("Failed to delete account :" + e.getMessage());
     } finally {
       closeResources(connection, statement, null);
     }
-    return null;
   }
 
   @Override

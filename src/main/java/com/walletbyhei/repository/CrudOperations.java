@@ -15,7 +15,7 @@ public interface CrudOperations<T> {
 
   T save(T toSave);
 
-  T delete(T toDelete);
+  void delete(T toDelete);
 
   void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet);
 }
