@@ -1,12 +1,9 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
 import com.walletbyhei.dbConnection.ConnectionToDb;
-import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Transaction;
-import com.walletbyhei.model.type.AccountType;
 import com.walletbyhei.model.type.TransactionType;
 import com.walletbyhei.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +19,17 @@ public class TransactionRepository implements CrudOperations<Transaction> {
   private static final String ACCOUNT_ID_COLUMN = "account_id";
   private static final String CATEGORY_ID_COLUMN = "category_id";
 
-  private static final String SELECT_BY_ID_QUERY = "SELECT * FROM transaction WHERE transaction_id = ?";
+  private static final String SELECT_BY_ID_QUERY =
+      "SELECT * FROM transaction WHERE transaction_id = ?";
   private static final String SELECT_ALL_QUERY = "SELECT * FROM transaction";
   private static final String INSERT_QUERY =
-      "INSERT INTO transaction (transaction_date, transaction_type, amount, reason, account_id, category_id) VALUES (?, CAST(? AS"
-          + " transaction_type), ?, ?, ?, ?) RETURNING *";
+      "INSERT INTO transaction (transaction_date, transaction_type, amount, reason, account_id,"
+          + " category_id) VALUES (?, CAST(? AS transaction_type), ?, ?, ?, ?) RETURNING *";
   private static final String UPDATE_QUERY =
-      "UPDATE account SET transaction_date = ?, transaction_type = CAST(? AS account_type), amount = ?, reason = ?, account_id = ?, category_id = ?"
-          + " WHERE transaction_id = ? RETURNING *";
+      "UPDATE transaction SET transaction_date = ?, transaction_type = CAST(? AS account_type), amount"
+          + " = ?, reason = ?, account_id = ?, category_id = ? WHERE transaction_id = ? RETURNING"
+          + " *";
   private static final String DELETE_QUERY = "DELETE FROM transaction WHERE transaction_id = ?";
-
 
   @Override
   public Transaction findById(Long toFind) {
@@ -77,7 +75,8 @@ public class TransactionRepository implements CrudOperations<Transaction> {
         Transaction transaction = new Transaction();
         transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
         transaction.setTransactionDate(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN));
-        transaction.setTransactionType(TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+        transaction.setTransactionType(
+            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
         transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
         transaction.setReason(resultSet.getString(REASON_COLUMN));
         transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
@@ -176,7 +175,8 @@ public class TransactionRepository implements CrudOperations<Transaction> {
   }
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();

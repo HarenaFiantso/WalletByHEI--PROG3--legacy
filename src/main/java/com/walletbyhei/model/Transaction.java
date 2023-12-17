@@ -1,7 +1,6 @@
 package com.walletbyhei.model;
 
 import com.walletbyhei.model.type.TransactionType;
-
 import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
