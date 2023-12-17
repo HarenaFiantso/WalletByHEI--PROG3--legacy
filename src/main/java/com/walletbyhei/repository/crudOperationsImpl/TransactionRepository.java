@@ -26,9 +26,9 @@ public class TransactionRepository implements CrudOperations<Transaction> {
       "INSERT INTO transaction (transaction_date, transaction_type, amount, reason, account_id,"
           + " category_id) VALUES (?, CAST(? AS transaction_type), ?, ?, ?, ?) RETURNING *";
   private static final String UPDATE_QUERY =
-      "UPDATE transaction SET transaction_date = ?, transaction_type = CAST(? AS account_type), amount"
-          + " = ?, reason = ?, account_id = ?, category_id = ? WHERE transaction_id = ? RETURNING"
-          + " *";
+      "UPDATE transaction SET transaction_date = ?, transaction_type = CAST(? AS account_type),"
+          + " amount = ?, reason = ?, account_id = ?, category_id = ? WHERE transaction_id = ?"
+          + " RETURNING *";
   private static final String DELETE_QUERY = "DELETE FROM transaction WHERE transaction_id = ?";
 
   @Override

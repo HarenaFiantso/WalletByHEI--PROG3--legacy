@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS balance
 );
 
 -- Creating tables transaction & category and type
-CREATE TYPE transaction_type AS ENUM ('INCOME', 'EXPENSE');
+CREATE TYPE transaction_type AS ENUM ('CREDIT', 'DEBIT');
 CREATE TABLE IF NOT EXISTS category
 (
     category_id      SERIAL PRIMARY KEY,
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS transaction
 -- Creating table transfer_history
 CREATE TABLE IF NOT EXISTS transfer_history
 (
-    transfer_history      SERIAL PRIMARY KEY,
+    transfer_history_id   SERIAL PRIMARY KEY,
     transfer_date         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     debit_transaction_id  INT       NOT NULL,
     credit_transaction_id INT       NOT NULL,
