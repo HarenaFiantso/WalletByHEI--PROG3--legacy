@@ -124,10 +124,11 @@ public class BalanceRepository implements CrudOperations<Balance> {
 
         if (resultSet.next()) {
           Balance savedBalance = new Balance();
-          savedBalance.setBalanceId(resultSet.getLong(BALANCE_ID_COLUMN));
           savedBalance.setBalanceDateTime(
               resultSet.getTimestamp(BALANCE_DATE_TIME_COLUMN).toLocalDateTime());
           savedBalance.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
+          savedBalance.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
+
           return savedBalance;
         }
       }

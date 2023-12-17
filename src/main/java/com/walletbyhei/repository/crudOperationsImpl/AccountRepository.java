@@ -125,7 +125,7 @@ public class AccountRepository implements CrudOperations<Account> {
 
         if (resultSet.next()) {
           Account savedAccount = new Account();
-          savedAccount.setAccountId(resultSet.getLong(ACCOUNT_ID_COLUMN));
+          savedAccount.setAccountName(resultSet.getString(ACCOUNT_NAME_COLUMN));
           savedAccount.setAccountType(
               AccountType.valueOf(resultSet.getString(ACCOUNT_TYPE_COLUMN)));
           savedAccount.setCurrencyId(resultSet.getInt(CURRENCY_ID_COLUMN));
