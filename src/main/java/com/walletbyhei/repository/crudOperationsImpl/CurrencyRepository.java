@@ -1,13 +1,10 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
 import com.walletbyhei.dbConnection.ConnectionToDb;
-import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Currency;
-import com.walletbyhei.model.type.AccountType;
 import com.walletbyhei.model.type.CurrencyCodeType;
 import com.walletbyhei.model.type.CurrencyNameType;
 import com.walletbyhei.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +19,11 @@ public class CurrencyRepository implements CrudOperations<Currency> {
   private static final String SELECT_BY_ID_QUERY = "SELECT * FROM currency WHERE currency_id = ?";
   private static final String SELECT_ALL_QUERY = "SELECT * FROM currency";
   private static final String INSERT_QUERY =
-      "INSERT INTO currency (currency_name, currency_code) VALUES (CAST(? AS currency_type), CAST(? AS"
-          + " account_type)) RETURNING *";
+      "INSERT INTO currency (currency_name, currency_code) VALUES (CAST(? AS currency_name), CAST(?"
+          + " AS currency_code)) RETURNING *";
   private static final String UPDATE_QUERY =
-      "UPDATE currency SET currency_name = CAST(? AS currency_name), currency_code = CAST(? AS currency_code)"
-          + " WHERE currency_id = ? RETURNING *";
+      "UPDATE currency SET currency_name = CAST(? AS currency_name), currency_code = CAST(? AS"
+          + " currency_code) WHERE currency_id = ? RETURNING *";
   private static final String DELETE_QUERY = "DELETE FROM currency WHERE currency_id = ?";
 
   @Override
@@ -72,8 +69,10 @@ public class CurrencyRepository implements CrudOperations<Currency> {
       while (resultSet.next()) {
         Currency currency = new Currency();
         currency.setCurrencyId(resultSet.getLong(CURRENCY_ID_COLUMN));
-        currency.setCurrencyName(CurrencyNameType.valueOf(resultSet.getString(CURRENCY_NAME_COLUMN)));
-        currency.setCurrencyCode(CurrencyCodeType.valueOf(resultSet.getString(CURRENCY_CODE_COLUMN)));
+        currency.setCurrencyName(
+            CurrencyNameType.valueOf(resultSet.getString(CURRENCY_NAME_COLUMN)));
+        currency.setCurrencyCode(
+            CurrencyCodeType.valueOf(resultSet.getString(CURRENCY_CODE_COLUMN)));
 
         currencies.add(currency);
       }
@@ -125,7 +124,8 @@ public class CurrencyRepository implements CrudOperations<Currency> {
 
         if (resultSet.next()) {
           Currency savedCurrency = new Currency();
-          savedCurrency.setCurrencyName(CurrencyNameType.valueOf(resultSet.getString(CURRENCY_NAME_COLUMN)));
+          savedCurrency.setCurrencyName(
+              CurrencyNameType.valueOf(resultSet.getString(CURRENCY_NAME_COLUMN)));
           savedCurrency.setCurrencyCode(
               CurrencyCodeType.valueOf(resultSet.getString(CURRENCY_CODE_COLUMN)));
 
@@ -158,7 +158,8 @@ public class CurrencyRepository implements CrudOperations<Currency> {
   }
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();
