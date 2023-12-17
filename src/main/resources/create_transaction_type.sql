@@ -1,1 +1,1 @@
-CREATE TYPE transaction_type AS ENUM ('INCOME', 'EXPENSE');
+CREATE TYPE transaction_type AS ENUM ('CREDIT', 'DEBIT');
