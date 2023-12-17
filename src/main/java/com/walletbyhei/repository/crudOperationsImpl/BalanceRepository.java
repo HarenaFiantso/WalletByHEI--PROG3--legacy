@@ -3,7 +3,6 @@ package com.walletbyhei.repository.crudOperationsImpl;
 import com.walletbyhei.dbConnection.ConnectionToDb;
 import com.walletbyhei.model.Balance;
 import com.walletbyhei.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,11 @@ public class BalanceRepository implements CrudOperations<Balance> {
 
   private static final String SELECT_BY_ID_QUERY = "SELECT * FROM balance WHERE balance_id = ?";
   private static final String SELECT_ALL_QUERY = "SELECT * FROM balance";
-  private static final String INSERT_QUERY = "INSERT INTO balance (balance_date_time, amount, account_id) VALUES (?, ?, ?) RETURNING *";
-  private static final String UPDATE_QUERY = "UPDATE balance SET balance_date_time = ?, amount = ?, account_id = ? WHERE balance_id = ? RETURNING *";
+  private static final String INSERT_QUERY =
+      "INSERT INTO balance (balance_date_time, amount, account_id) VALUES (?, ?, ?) RETURNING *";
+  private static final String UPDATE_QUERY =
+      "UPDATE balance SET balance_date_time = ?, amount = ?, account_id = ? WHERE balance_id = ?"
+          + " RETURNING *";
   private static final String DELETE_QUERY = "DELETE FROM balance WHERE balance_id = ?";
 
   @Override
@@ -65,7 +67,8 @@ public class BalanceRepository implements CrudOperations<Balance> {
       while (resultSet.next()) {
         Balance balance = new Balance();
         balance.setBalanceId(resultSet.getLong(BALANCE_ID_COLUMN));
-        balance.setBalanceDateTime(resultSet.getTimestamp(BALANCE_DATE_TIME_COLUMN).toLocalDateTime());
+        balance.setBalanceDateTime(
+            resultSet.getTimestamp(BALANCE_DATE_TIME_COLUMN).toLocalDateTime());
         balance.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
         balance.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
 
@@ -122,7 +125,8 @@ public class BalanceRepository implements CrudOperations<Balance> {
         if (resultSet.next()) {
           Balance savedBalance = new Balance();
           savedBalance.setBalanceId(resultSet.getLong(BALANCE_ID_COLUMN));
-          savedBalance.setBalanceDateTime(resultSet.getTimestamp(BALANCE_DATE_TIME_COLUMN).toLocalDateTime());
+          savedBalance.setBalanceDateTime(
+              resultSet.getTimestamp(BALANCE_DATE_TIME_COLUMN).toLocalDateTime());
           savedBalance.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
           return savedBalance;
         }
@@ -153,7 +157,8 @@ public class BalanceRepository implements CrudOperations<Balance> {
   }
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();

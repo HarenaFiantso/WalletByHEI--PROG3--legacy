@@ -4,7 +4,6 @@ import com.walletbyhei.dbConnection.ConnectionToDb;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.type.AccountType;
 import com.walletbyhei.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,12 @@ public class AccountRepository implements CrudOperations<Account> {
 
   private static final String SELECT_BY_ID_QUERY = "SELECT * FROM account WHERE account_id = ?";
   private static final String SELECT_ALL_QUERY = "SELECT * FROM account";
-  private static final String INSERT_QUERY = "INSERT INTO account (account_name, account_type, currency_id) VALUES (?, CAST(? AS account_type), ?) RETURNING *";
-  private static final String UPDATE_QUERY = "UPDATE account SET account_name = ?, account_type = CAST(? AS account_type), currency_id = ? WHERE account_id = ? RETURNING *";
+  private static final String INSERT_QUERY =
+      "INSERT INTO account (account_name, account_type, currency_id) VALUES (?, CAST(? AS"
+          + " account_type), ?) RETURNING *";
+  private static final String UPDATE_QUERY =
+      "UPDATE account SET account_name = ?, account_type = CAST(? AS account_type), currency_id = ?"
+          + " WHERE account_id = ? RETURNING *";
   private static final String DELETE_QUERY = "DELETE FROM account WHERE account_id = ?";
 
   @Override
@@ -123,7 +126,8 @@ public class AccountRepository implements CrudOperations<Account> {
         if (resultSet.next()) {
           Account savedAccount = new Account();
           savedAccount.setAccountId(resultSet.getLong(ACCOUNT_ID_COLUMN));
-          savedAccount.setAccountType(AccountType.valueOf(resultSet.getString(ACCOUNT_TYPE_COLUMN)));
+          savedAccount.setAccountType(
+              AccountType.valueOf(resultSet.getString(ACCOUNT_TYPE_COLUMN)));
           savedAccount.setCurrencyId(resultSet.getInt(CURRENCY_ID_COLUMN));
 
           return savedAccount;

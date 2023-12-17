@@ -14,6 +14,6 @@ public class Account {
   private String accountName;
   private AccountType accountType;
   private List<Transaction> transactionList;
-  private int balanceId;
+  private Balance balanceId;
   private int currencyId;
 }

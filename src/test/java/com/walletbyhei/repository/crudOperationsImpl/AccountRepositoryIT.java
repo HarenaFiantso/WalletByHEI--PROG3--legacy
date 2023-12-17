@@ -1,29 +1,25 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
-import com.walletbyhei.model.Account;
-import com.walletbyhei.model.type.AccountType;
-import org.junit.jupiter.api.*;
-import org.mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+
+import com.walletbyhei.model.Account;
+import com.walletbyhei.model.type.AccountType;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.*;
+import org.mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AccountRepositoryIT {
   /* TODO: Add additional tests assertions */
 
-  @Mock
-  private AccountRepository accountRepository;
+  @Mock private AccountRepository accountRepository;
 
-  @InjectMocks
-  private AccountRepository accountRepositoryUnderTest;
+  @InjectMocks private AccountRepository accountRepositoryUnderTest;
 
-  @Captor
-  private ArgumentCaptor<Account> accountCaptor;
+  @Captor private ArgumentCaptor<Account> accountCaptor;
 
   @BeforeEach
   public void init() {
@@ -79,9 +75,11 @@ public class AccountRepositoryIT {
   public void testSaveAll() {
     List<Account> mockAccounts = createMockAccountList();
 
-    when(accountRepository.save(any(Account.class))).thenAnswer(invocation -> {
-      return invocation.<Account>getArgument(0);
-    });
+    when(accountRepository.save(any(Account.class)))
+        .thenAnswer(
+            invocation -> {
+              return invocation.<Account>getArgument(0);
+            });
 
     List<Account> savedAccounts = accountRepositoryUnderTest.saveAll(mockAccounts);
 
