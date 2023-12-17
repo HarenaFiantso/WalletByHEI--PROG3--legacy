@@ -3,7 +3,6 @@ package com.walletbyhei.service;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Transaction;
 import com.walletbyhei.model.type.TransactionType;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -19,7 +18,8 @@ public class AccountService {
     Double balance = 0.0;
 
     for (Transaction transaction : transactions) {
-      if (transaction.getTransactionDate().toInstant().isBefore(Instant.from(dateTime)) || transaction.getTransactionDate().toLocalDateTime().isEqual(dateTime)) {
+      if (transaction.getTransactionDate().toInstant().isBefore(Instant.from(dateTime))
+          || transaction.getTransactionDate().toLocalDateTime().isEqual(dateTime)) {
 
         if (transaction.getTransactionType() == TransactionType.CREDIT) {
           balance += transaction.getAmount();
@@ -38,7 +38,8 @@ public class AccountService {
     return getBalanceAtDateTime(account, currentDateTime);
   }
 
-  public Map<LocalDateTime, Double> getBalanceHistoryInInterval(Account account, LocalDateTime startDate, LocalDateTime endDate) {
+  public Map<LocalDateTime, Double> getBalanceHistoryInInterval(
+      Account account, LocalDateTime startDate, LocalDateTime endDate) {
     Map<LocalDateTime, Double> balanceHistory = new HashMap<>();
     LocalDateTime currentDateTime = startDate;
 

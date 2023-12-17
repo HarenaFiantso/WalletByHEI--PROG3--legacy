@@ -1,7 +1,6 @@
 package com.walletbyhei.model;
 
 import com.walletbyhei.model.type.AccountType;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;

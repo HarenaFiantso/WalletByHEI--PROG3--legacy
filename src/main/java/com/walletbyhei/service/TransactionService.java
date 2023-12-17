@@ -3,14 +3,14 @@ package com.walletbyhei.service;
 import com.walletbyhei.model.Account;
 import com.walletbyhei.model.Transaction;
 import com.walletbyhei.model.type.TransactionType;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class TransactionService {
 
   /* TODO: Create a function that allows you to make a transaction in an account (debit or credit) */
-  public Account performTransaction(Account account, TransactionType transactionType, Double amount) throws IllegalAccessException {
+  public Account performTransaction(Account account, TransactionType transactionType, Double amount)
+      throws IllegalAccessException {
     LocalDateTime transactionDate = LocalDateTime.now();
 
     if (transactionType == TransactionType.DEBIT) {

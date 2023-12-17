@@ -1,7 +1,5 @@
 package com.walletbyhei.repository;
 
-import com.walletbyhei.model.TransferHistory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

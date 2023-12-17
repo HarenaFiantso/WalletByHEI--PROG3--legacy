@@ -12,6 +12,6 @@ public class CurrencyValue {
   private Long currencyValueId;
   private LocalDate currencyValueDate;
   private Double exchangeRate;
-  private Currency sourceCurrencyId;
-  private Currency destinationCurrencyId;
+  private int sourceCurrencyId;
+  private int destinationCurrencyId;
 }

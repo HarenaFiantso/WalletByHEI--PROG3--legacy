@@ -29,7 +29,8 @@ public class TransferHistoryRepository implements CrudOperations<TransferHistory
       "DELETE FROM transfer_history WHERE transfer_history_id = ?";
 
   /* ===== Additional Query(ies) ===== */
-  private static final String SELECT_BY_TRANSFER_DATE_RANGE = "SELECT * FROM transfer_history WHERE transfer_date BETWEEN ? AND ?";
+  private static final String SELECT_BY_TRANSFER_DATE_RANGE =
+      "SELECT * FROM transfer_history WHERE transfer_date BETWEEN ? AND ?";
 
   @Override
   public TransferHistory findById(Long toFind) {
@@ -132,7 +133,8 @@ public class TransferHistoryRepository implements CrudOperations<TransferHistory
           TransferHistory savedTransferHistory = new TransferHistory();
           savedTransferHistory.setTransferDate(resultSet.getTimestamp(TRANSFER_DATE_COLUMN));
           savedTransferHistory.setDebitTransactionId(resultSet.getInt(DEBIT_TRANSACTION_ID_COLUMN));
-          savedTransferHistory.setCreditTransactionId(resultSet.getInt(CREDIT_TRANSACTION_ID_COLUMN));
+          savedTransferHistory.setCreditTransactionId(
+              resultSet.getInt(CREDIT_TRANSACTION_ID_COLUMN));
 
           return savedTransferHistory;
         }
@@ -180,7 +182,8 @@ public class TransferHistoryRepository implements CrudOperations<TransferHistory
     }
   }
 
-  public List<TransferHistory> getTransferHistoryInInterval(LocalDateTime startDate, LocalDateTime endDate) {
+  public List<TransferHistory> getTransferHistoryInInterval(
+      LocalDateTime startDate, LocalDateTime endDate) {
     List<TransferHistory> transferHistories = new ArrayList<>();
     Connection connection = null;
     PreparedStatement statement = null;
@@ -205,7 +208,8 @@ public class TransferHistoryRepository implements CrudOperations<TransferHistory
         transferHistories.add(transferHistory);
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve transfer history by date range : " + e.getMessage());
+      throw new RuntimeException(
+          "Failed to retrieve transfer history by date range : " + e.getMessage());
     } finally {
       closeResources(connection, statement, resultSet);
     }
