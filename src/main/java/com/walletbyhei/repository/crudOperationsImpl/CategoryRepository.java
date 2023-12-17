@@ -98,11 +98,11 @@ public class CategoryRepository implements CrudOperations<Category> {
     ResultSet resultSet = null;
 
     String QUERY;
-    boolean isNewAccount = toSave.getCategoryId() == null;
+    boolean isNewCategory = toSave.getCategoryId() == null;
 
     try {
       connection = ConnectionToDb.getConnection();
-      if (isNewAccount) {
+      if (isNewCategory) {
         QUERY = INSERT_QUERY;
         statement = connection.prepareStatement(QUERY, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, toSave.getCategoryName());
