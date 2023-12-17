@@ -1,6 +1,6 @@
 package com.walletbyhei.model;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 public class TransferHistory {
   private Long transferHistoryId;
-  private Account debitTransaction;
-  private Account creditTransaction;
+  private Timestamp transferDate;
   private Double amount;
-  private LocalDateTime transferDate;
+  private int debitTransactionId;
+  private int creditTransactionId;
 }

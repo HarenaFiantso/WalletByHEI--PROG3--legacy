@@ -1,7 +1,7 @@
 package com.walletbyhei.model;
 
 import com.walletbyhei.model.type.TransactionType;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 public class Transaction {
   private Long transactionId;
-  private String label;
-  private Double amount;
-  private LocalDateTime dateTime;
+  private Timestamp transactionDate;
   private TransactionType transactionType;
-  private Account account;
+  private Double amount;
+  private String reason;
+  private int accountId;
+  private int categoryId;
 }

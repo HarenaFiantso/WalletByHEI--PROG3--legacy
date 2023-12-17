@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="wallet_by_hei@localhost" uuid="b04d5885-716a-4d82-9531-c7abcbbcaa27">
+    <data-source source="LOCAL" name="wallet_by_hei@localhost" uuid="851c75eb-1b3a-4b75-b39b-0c181d4d37bf">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
-      <remarks>Wallet By HEI database</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/wallet_by_hei</jdbc-url>
       <jdbc-additional-properties>
