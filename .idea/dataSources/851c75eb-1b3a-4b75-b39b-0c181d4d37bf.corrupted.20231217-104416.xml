@@ -11,7 +11,7 @@
 13796||10|c|G
 13796||10|C|G
 13796||10|T|G</Grants>
-      <IntrospectionStateNumber>878</IntrospectionStateNumber>
+      <IntrospectionStateNumber>880</IntrospectionStateNumber>
       <ServerVersion>14.10</ServerVersion>
       <StartupTime>1702730568</StartupTime>
       <TimeZones>true ACDT
@@ -1417,7 +1417,7 @@ false posixrules
 13431||10|C|G
 13431||-9223372036854775808|U|G
 13431||10|U|G</Grants>
-      <IntrospectionStateNumber>878</IntrospectionStateNumber>
+      <IntrospectionStateNumber>880</IntrospectionStateNumber>
       <ObjectId>25158</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4842,8 +4842,8 @@ false posixrules
     <schema id="263" parent="4" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>878</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2023-12-17.07:48:19</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>880</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2023-12-17.19:05:07</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>526</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4917,7 +4917,15 @@ DEBIT</Labels>
       <StateNumber>869</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="272" parent="263" name="transaction_transaction_id_seq">
+    <sequence id="272" parent="263" name="exchange_rate_exchange_rate_id_seq">
+      <DasType>integer|0s</DasType>
+      <ObjectId>25388</ObjectId>
+      <SequenceIdentity>1</SequenceIdentity>
+      <StartValue>1</StartValue>
+      <StateNumber>879</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </sequence>
+    <sequence id="273" parent="263" name="transaction_transaction_id_seq">
       <DasType>integer|0s</DasType>
       <ObjectId>25352</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4925,7 +4933,7 @@ DEBIT</Labels>
       <StateNumber>876</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <sequence id="273" parent="263" name="transfer_history_transfer_history_id_seq">
+    <sequence id="274" parent="263" name="transfer_history_transfer_history_id_seq">
       <DasType>integer|0s</DasType>
       <ObjectId>25370</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
@@ -4933,49 +4941,55 @@ DEBIT</Labels>
       <StateNumber>877</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <table id="274" parent="263" name="account">
+    <table id="275" parent="263" name="account">
       <ObjectId>25316</ObjectId>
       <StateNumber>872</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="275" parent="263" name="balance">
+    <table id="276" parent="263" name="balance">
       <ObjectId>25328</ObjectId>
       <StateNumber>873</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="276" parent="263" name="category">
+    <table id="277" parent="263" name="category">
       <ObjectId>25346</ObjectId>
       <StateNumber>876</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="277" parent="263" name="currency">
+    <table id="278" parent="263" name="currency">
       <ObjectId>25286</ObjectId>
       <StateNumber>870</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="278" parent="263" name="currency_value">
+    <table id="279" parent="263" name="currency_value">
       <ObjectId>25292</ObjectId>
       <StateNumber>870</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="279" parent="263" name="transaction">
+    <table id="280" parent="263" name="exchange_rate">
+      <ObjectId>25389</ObjectId>
+      <StateNumber>879</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="281" parent="263" name="transaction">
       <ObjectId>25353</ObjectId>
       <StateNumber>876</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <table id="280" parent="263" name="transfer_history">
+    <table id="282" parent="263" name="transfer_history">
       <ObjectId>25371</ObjectId>
       <StateNumber>877</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <column id="281" parent="274" name="account_id">
+    <column id="283" parent="275" name="account_id">
       <DasType>integer|0s</DasType>
       <DefaultExpression>nextval(&apos;account_account_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4984,28 +4998,28 @@ DEBIT</Labels>
       <SequenceId>25315</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="282" parent="274" name="account_name">
+    <column id="284" parent="275" name="account_name">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>872</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="283" parent="274" name="account_type">
+    <column id="285" parent="275" name="account_type">
       <DasType>account_type|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>872</StateNumber>
       <TypeId>25309</TypeId>
     </column>
-    <column id="284" parent="274" name="currency_id">
+    <column id="286" parent="275" name="currency_id">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>872</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="285" parent="274" name="account_currency_id_fkey">
+    <foreign-key id="287" parent="275" name="account_currency_id_fkey">
       <ColNames>currency_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25322</ObjectId>
@@ -5013,7 +5027,7 @@ DEBIT</Labels>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>25286</RefTableId>
     </foreign-key>
-    <index id="286" parent="274" name="account_pkey">
+    <index id="288" parent="275" name="account_pkey">
       <ColNames>account_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25320</ObjectId>
@@ -5022,14 +5036,14 @@ DEBIT</Labels>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="287" parent="274" name="account_pkey">
+    <key id="289" parent="275" name="account_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25321</ObjectId>
       <Primary>1</Primary>
       <StateNumber>872</StateNumber>
       <UnderlyingIndexId>25320</UnderlyingIndexId>
     </key>
-    <column id="288" parent="275" name="balance_id">
+    <column id="290" parent="276" name="balance_id">
       <DasType>integer|0s</DasType>
       <DefaultExpression>nextval(&apos;balance_balance_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5038,7 +5052,7 @@ DEBIT</Labels>
       <SequenceId>25327</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="289" parent="275" name="balance_date_time">
+    <column id="291" parent="276" name="balance_date_time">
       <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5046,21 +5060,21 @@ DEBIT</Labels>
       <StateNumber>873</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="290" parent="275" name="amount">
+    <column id="292" parent="276" name="amount">
       <DasType>double precision|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>873</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="291" parent="275" name="account_id">
+    <column id="293" parent="276" name="account_id">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>873</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="292" parent="275" name="balance_account_id_fkey">
+    <foreign-key id="294" parent="276" name="balance_account_id_fkey">
       <ColNames>account_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25335</ObjectId>
@@ -5068,7 +5082,7 @@ DEBIT</Labels>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>25316</RefTableId>
     </foreign-key>
-    <index id="293" parent="275" name="balance_pkey">
+    <index id="295" parent="276" name="balance_pkey">
       <ColNames>balance_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25333</ObjectId>
@@ -5077,14 +5091,14 @@ DEBIT</Labels>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="294" parent="275" name="balance_pkey">
+    <key id="296" parent="276" name="balance_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25334</ObjectId>
       <Primary>1</Primary>
       <StateNumber>873</StateNumber>
       <UnderlyingIndexId>25333</UnderlyingIndexId>
     </key>
-    <column id="295" parent="276" name="category_id">
+    <column id="297" parent="277" name="category_id">
       <DasType>integer|0s</DasType>
       <DefaultExpression>nextval(&apos;category_category_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5093,21 +5107,21 @@ DEBIT</Labels>
       <SequenceId>25345</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="296" parent="276" name="category_name">
+    <column id="298" parent="277" name="category_name">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>875</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="297" parent="276" name="transaction_type">
+    <column id="299" parent="277" name="transaction_type">
       <DasType>transaction_type|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>875</StateNumber>
       <TypeId>25341</TypeId>
     </column>
-    <index id="298" parent="276" name="category_pkey">
+    <index id="300" parent="277" name="category_pkey">
       <ColNames>category_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25350</ObjectId>
@@ -5116,14 +5130,14 @@ DEBIT</Labels>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="299" parent="276" name="category_pkey">
+    <key id="301" parent="277" name="category_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25351</ObjectId>
       <Primary>1</Primary>
       <StateNumber>875</StateNumber>
       <UnderlyingIndexId>25350</UnderlyingIndexId>
     </key>
-    <column id="300" parent="277" name="currency_id">
+    <column id="302" parent="278" name="currency_id">
       <DasType>integer|0s</DasType>
       <DefaultExpression>nextval(&apos;currency_currency_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5132,21 +5146,21 @@ DEBIT</Labels>
       <SequenceId>25285</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="301" parent="277" name="currency_name">
+    <column id="303" parent="278" name="currency_name">
       <DasType>currency_name|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>869</StateNumber>
       <TypeId>25275</TypeId>
     </column>
-    <column id="302" parent="277" name="currency_code">
+    <column id="304" parent="278" name="currency_code">
       <DasType>currency_code|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>869</StateNumber>
       <TypeId>25280</TypeId>
     </column>
-    <index id="303" parent="277" name="currency_pkey">
+    <index id="305" parent="278" name="currency_pkey">
       <ColNames>currency_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25290</ObjectId>
@@ -5155,21 +5169,21 @@ DEBIT</Labels>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="304" parent="277" name="currency_pkey">
+    <key id="306" parent="278" name="currency_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25291</ObjectId>
       <Primary>1</Primary>
       <StateNumber>869</StateNumber>
       <UnderlyingIndexId>25290</UnderlyingIndexId>
     </key>
-    <column id="305" parent="278" name="currency_value_id">
+    <column id="307" parent="279" name="currency_value_id">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>870</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="306" parent="278" name="currency_value_date">
+    <column id="308" parent="279" name="currency_value_date">
       <DasType>date|0s</DasType>
       <DefaultExpression>CURRENT_DATE</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5177,28 +5191,28 @@ DEBIT</Labels>
       <StateNumber>870</StateNumber>
       <TypeId>1082</TypeId>
     </column>
-    <column id="307" parent="278" name="exchange_rate">
+    <column id="309" parent="279" name="exchange_rate">
       <DasType>double precision|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>870</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="308" parent="278" name="source_currency_id">
+    <column id="310" parent="279" name="source_currency_id">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>870</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="309" parent="278" name="destination_currency_id">
+    <column id="311" parent="279" name="destination_currency_id">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>870</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="310" parent="278" name="currency_value_source_currency_id_fkey">
+    <foreign-key id="312" parent="279" name="currency_value_source_currency_id_fkey">
       <ColNames>source_currency_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25298</ObjectId>
@@ -5206,7 +5220,7 @@ DEBIT</Labels>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>25286</RefTableId>
     </foreign-key>
-    <foreign-key id="311" parent="278" name="currency_value_destination_currency_id_fkey">
+    <foreign-key id="313" parent="279" name="currency_value_destination_currency_id_fkey">
       <ColNames>destination_currency_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25303</ObjectId>
@@ -5214,7 +5228,7 @@ DEBIT</Labels>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>25286</RefTableId>
     </foreign-key>
-    <index id="312" parent="278" name="currency_value_pkey">
+    <index id="314" parent="279" name="currency_value_pkey">
       <ColNames>currency_value_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25296</ObjectId>
@@ -5223,14 +5237,61 @@ DEBIT</Labels>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="313" parent="278" name="currency_value_pkey">
+    <key id="315" parent="279" name="currency_value_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25297</ObjectId>
       <Primary>1</Primary>
       <StateNumber>870</StateNumber>
       <UnderlyingIndexId>25296</UnderlyingIndexId>
     </key>
-    <column id="314" parent="279" name="transaction_id">
+    <column id="316" parent="280" name="exchange_rate_id">
+      <DasType>integer|0s</DasType>
+      <DefaultExpression>nextval(&apos;exchange_rate_exchange_rate_id_seq&apos;::regclass)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>879</StateNumber>
+      <SequenceId>25388</SequenceId>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="317" parent="280" name="date_time">
+      <DasType>date|0s</DasType>
+      <DefaultExpression>CURRENT_DATE</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>879</StateNumber>
+      <TypeId>1082</TypeId>
+    </column>
+    <column id="318" parent="280" name="rate">
+      <DasType>double precision|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>879</StateNumber>
+      <TypeId>701</TypeId>
+    </column>
+    <column id="319" parent="280" name="weight">
+      <DasType>integer|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>879</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="320" parent="280" name="exchange_rate_pkey">
+      <ColNames>exchange_rate_id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>25394</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>879</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="321" parent="280" name="exchange_rate_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>25395</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>879</StateNumber>
+      <UnderlyingIndexId>25394</UnderlyingIndexId>
+    </key>
+    <column id="322" parent="281" name="transaction_id">
       <DasType>integer|0s</DasType>
       <DefaultExpression>nextval(&apos;transaction_transaction_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5239,49 +5300,49 @@ DEBIT</Labels>
       <SequenceId>25352</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="315" parent="279" name="transaction_date">
+    <column id="323" parent="281" name="transaction_date">
       <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>2</Position>
       <StateNumber>876</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="316" parent="279" name="transaction_type">
+    <column id="324" parent="281" name="transaction_type">
       <DasType>transaction_type|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>876</StateNumber>
       <TypeId>25341</TypeId>
     </column>
-    <column id="317" parent="279" name="amount">
+    <column id="325" parent="281" name="amount">
       <DasType>double precision|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>876</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="318" parent="279" name="reason">
+    <column id="326" parent="281" name="reason">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>876</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="319" parent="279" name="account_id">
+    <column id="327" parent="281" name="account_id">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>876</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="320" parent="279" name="category_id">
+    <column id="328" parent="281" name="category_id">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>876</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="321" parent="279" name="transaction_account_id_fkey">
+    <foreign-key id="329" parent="281" name="transaction_account_id_fkey">
       <ColNames>account_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25360</ObjectId>
@@ -5289,7 +5350,7 @@ DEBIT</Labels>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>25316</RefTableId>
     </foreign-key>
-    <foreign-key id="322" parent="279" name="transaction_category_id_fkey">
+    <foreign-key id="330" parent="281" name="transaction_category_id_fkey">
       <ColNames>category_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25365</ObjectId>
@@ -5297,7 +5358,7 @@ DEBIT</Labels>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>25346</RefTableId>
     </foreign-key>
-    <index id="323" parent="279" name="transaction_pkey">
+    <index id="331" parent="281" name="transaction_pkey">
       <ColNames>transaction_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25358</ObjectId>
@@ -5306,14 +5367,14 @@ DEBIT</Labels>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="324" parent="279" name="transaction_pkey">
+    <key id="332" parent="281" name="transaction_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25359</ObjectId>
       <Primary>1</Primary>
       <StateNumber>876</StateNumber>
       <UnderlyingIndexId>25358</UnderlyingIndexId>
     </key>
-    <column id="325" parent="280" name="transfer_history_id">
+    <column id="333" parent="282" name="transfer_history_id">
       <DasType>integer|0s</DasType>
       <DefaultExpression>nextval(&apos;transfer_history_transfer_history_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5322,7 +5383,7 @@ DEBIT</Labels>
       <SequenceId>25370</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="326" parent="280" name="transfer_date">
+    <column id="334" parent="282" name="transfer_date">
       <DasType>timestamp|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
@@ -5330,21 +5391,21 @@ DEBIT</Labels>
       <StateNumber>877</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="327" parent="280" name="debit_transaction_id">
+    <column id="335" parent="282" name="debit_transaction_id">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>877</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="328" parent="280" name="credit_transaction_id">
+    <column id="336" parent="282" name="credit_transaction_id">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>877</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="329" parent="280" name="transfer_history_debit_transaction_id_fkey">
+    <foreign-key id="337" parent="282" name="transfer_history_debit_transaction_id_fkey">
       <ColNames>debit_transaction_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25378</ObjectId>
@@ -5352,7 +5413,7 @@ DEBIT</Labels>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>25353</RefTableId>
     </foreign-key>
-    <foreign-key id="330" parent="280" name="transfer_history_credit_transaction_id_fkey">
+    <foreign-key id="338" parent="282" name="transfer_history_credit_transaction_id_fkey">
       <ColNames>credit_transaction_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25383</ObjectId>
@@ -5360,7 +5421,7 @@ DEBIT</Labels>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>25353</RefTableId>
     </foreign-key>
-    <index id="331" parent="280" name="transfer_history_pkey">
+    <index id="339" parent="282" name="transfer_history_pkey">
       <ColNames>transfer_history_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25376</ObjectId>
@@ -5369,7 +5430,7 @@ DEBIT</Labels>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="332" parent="280" name="transfer_history_pkey">
+    <key id="340" parent="282" name="transfer_history_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>25377</ObjectId>
       <Primary>1</Primary>
