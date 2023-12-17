@@ -1,6 +1,6 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
-import com.walletbyhei.dbConnection.ConnectionToDb;
+import com.walletbyhei.database.ConnectionToDb;
 import com.walletbyhei.model.ExchangeRate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

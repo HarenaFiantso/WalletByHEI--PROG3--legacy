@@ -1,4 +1,4 @@
-package com.walletbyhei.dbConnection;
+package com.walletbyhei.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

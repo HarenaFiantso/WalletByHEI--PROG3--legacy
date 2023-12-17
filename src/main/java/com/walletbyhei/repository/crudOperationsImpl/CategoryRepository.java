@@ -1,6 +1,6 @@
 package com.walletbyhei.repository.crudOperationsImpl;
 
-import com.walletbyhei.dbConnection.ConnectionToDb;
+import com.walletbyhei.database.ConnectionToDb;
 import com.walletbyhei.model.Category;
 import com.walletbyhei.model.type.TransactionType;
 import com.walletbyhei.repository.CrudOperations;
