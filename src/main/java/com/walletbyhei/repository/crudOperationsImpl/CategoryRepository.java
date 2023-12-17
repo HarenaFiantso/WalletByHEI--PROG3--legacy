@@ -4,7 +4,6 @@ import com.walletbyhei.dbConnection.ConnectionToDb;
 import com.walletbyhei.model.Category;
 import com.walletbyhei.model.type.TransactionType;
 import com.walletbyhei.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +69,8 @@ public class CategoryRepository implements CrudOperations<Category> {
         Category category = new Category();
         category.setCategoryId(resultSet.getLong(CATEGORY_ID_COLUMN));
         category.setCategoryName(resultSet.getString(CATEGORY_NAME_COLUMN));
-        category.setTransactionType(TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+        category.setTransactionType(
+            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
 
         categories.add(category);
       }
@@ -155,7 +155,8 @@ public class CategoryRepository implements CrudOperations<Category> {
   }
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();
