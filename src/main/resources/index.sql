@@ -7,9 +7,9 @@ CREATE TYPE currency_name AS ENUM ('Euro', 'Ariary');
 CREATE TYPE currency_code AS ENUM ('EUR', 'MGA');
 CREATE TABLE IF NOT EXISTS currency
 (
-    currency_id     SERIAL PRIMARY KEY,
-    currency_name   currency_name NOT NULL,
-    currency_code   currency_code NOT NULL
+    currency_id   SERIAL PRIMARY KEY,
+    currency_name currency_name NOT NULL,
+    currency_code currency_code NOT NULL
 );
 
 -- Creating table currency_value
@@ -70,9 +70,18 @@ CREATE TABLE IF NOT EXISTS transaction
 CREATE TABLE IF NOT EXISTS transfer_history
 (
     transfer_history_id   SERIAL PRIMARY KEY,
-    transfer_date         TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    debit_transaction_id  INT              NOT NULL,
-    credit_transaction_id INT              NOT NULL,
+    transfer_date         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    debit_transaction_id  INT       NOT NULL,
+    credit_transaction_id INT       NOT NULL,
     FOREIGN KEY (debit_transaction_id) REFERENCES transaction (transaction_id),
     FOREIGN KEY (credit_transaction_id) REFERENCES transaction (transaction_id)
+);
+
+-- Creating table exchange_rate
+CREATE TABLE IF NOT EXISTS exchange_rate
+(
+    exchange_rate_id SERIAL PRIMARY KEY,
+    date_time        DATE             NOT NULL DEFAULT CURRENT_DATE,
+    rate             DOUBLE PRECISION NOT NULL,
+    weight           INT              NOT NULL
 );
