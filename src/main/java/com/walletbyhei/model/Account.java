@@ -1,6 +1,8 @@
 package com.walletbyhei.model;
 
 import com.walletbyhei.model.type.AccountType;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +16,7 @@ public class Account {
   private String accountName;
   private AccountType accountType;
   private List<Transaction> transactionList;
-  private Balance balanceId;
+  private Double balance;
   private int currencyId;
+  private LocalDateTime lastTransactionDate;
 }

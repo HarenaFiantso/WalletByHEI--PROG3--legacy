@@ -12,6 +12,6 @@ public class TransferHistory {
   private Long transferHistoryId;
   private Timestamp transferDate;
   private Double amount;
-  private int debitTransaction;
-  private int creditTransaction;
+  private int debitTransactionId;
+  private int creditTransactionId;
 }

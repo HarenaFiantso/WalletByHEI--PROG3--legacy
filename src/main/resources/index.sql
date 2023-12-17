@@ -7,9 +7,9 @@ CREATE TYPE currency_name AS ENUM ('Euro', 'Ariary');
 CREATE TYPE currency_code AS ENUM ('EUR', 'MGA');
 CREATE TABLE IF NOT EXISTS currency
 (
-    currency_id   SERIAL PRIMARY KEY,
-    currency_name currency_name NOT NULL,
-    currency_code currency_code NOT NULL
+    currency_id     SERIAL PRIMARY KEY,
+    currency_name   currency_name NOT NULL,
+    currency_code   currency_code NOT NULL
 );
 
 -- Creating table currency_value
@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS account
 CREATE TABLE IF NOT EXISTS balance
 (
     balance_id        SERIAL PRIMARY KEY,
-    balance_date_time TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    amount            DOUBLE PRECISION NOT NULL,
-    account_id        INT              NOT NULL,
+    balance_date_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    amount            DOUBLE PRECISION   DEFAULT 0 NOT NULL,
+    account_id        INT       NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account (account_id)
 );
 
@@ -49,9 +49,9 @@ CREATE TABLE IF NOT EXISTS balance
 CREATE TYPE transaction_type AS ENUM ('CREDIT', 'DEBIT');
 CREATE TABLE IF NOT EXISTS category
 (
-    category_id      SERIAL PRIMARY KEY,
-    category_name    VARCHAR(255)     NOT NULL,
-    transaction_type transaction_type NOT NULL
+    category_id   SERIAL PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL,
+    display_name  VARCHAR(255)
 );
 CREATE TABLE IF NOT EXISTS transaction
 (
@@ -70,9 +70,9 @@ CREATE TABLE IF NOT EXISTS transaction
 CREATE TABLE IF NOT EXISTS transfer_history
 (
     transfer_history_id   SERIAL PRIMARY KEY,
-    transfer_date         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    debit_transaction_id  INT       NOT NULL,
-    credit_transaction_id INT       NOT NULL,
+    transfer_date         TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    debit_transaction_id  INT              NOT NULL,
+    credit_transaction_id INT              NOT NULL,
     FOREIGN KEY (debit_transaction_id) REFERENCES transaction (transaction_id),
     FOREIGN KEY (credit_transaction_id) REFERENCES transaction (transaction_id)
 );
