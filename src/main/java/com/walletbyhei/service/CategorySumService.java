@@ -7,11 +7,9 @@ import com.walletbyhei.model.mapper.CategorySumMapper;
 import com.walletbyhei.model.type.TransactionType;
 import com.walletbyhei.repository.crudOperationsImpl.CategoryRepository;
 import com.walletbyhei.repository.crudOperationsImpl.TransactionRepository;
-
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,10 +21,12 @@ public class CategorySumService {
   CategoryRepository categoryRepository = new CategoryRepository();
 
   /* TODO:  Map date from the SQL function of the second question inside a class */
-  public CategorySum getCategorySumOne(int accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+  public CategorySum getCategorySumOne(
+      int accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
     CategorySum categorySum = new CategorySum();
 
-    try (CallableStatement callableStatement = connection.prepareCall("{call get_category_sum(?, ?, ?)}")) {
+    try (CallableStatement callableStatement =
+        connection.prepareCall("{call get_category_sum(?, ?, ?)}")) {
       callableStatement.setInt(1, accountId);
       callableStatement.setTimestamp(2, Timestamp.valueOf(startDateTime));
       callableStatement.setTimestamp(3, Timestamp.valueOf(endDateTime));
@@ -40,20 +40,26 @@ public class CategorySumService {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to map data from the SQL function of the second question : " + e.getMessage());
+      throw new RuntimeException(
+          "Failed to map data from the SQL function of the second question : " + e.getMessage());
     }
 
     return categorySum;
   }
 
-  public CategorySum getCategorySumTwo(int accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-    List<Transaction> transactions = Collections.singletonList(transactionRepository.findById((long) accountId));
+  public CategorySum getCategorySumTwo(
+      int accountId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    List<Transaction> transactions =
+        transactionRepository.findByIdAccount(String.valueOf(accountId));
     List<Category> categories = categoryRepository.findAll();
 
-    List<Transaction> filteredTransactions = transactions.stream()
-        .filter(transaction -> transaction.getTransactionDate().after(Timestamp.valueOf(startDateTime))
-            && transaction.getTransactionDate().before(Timestamp.valueOf(endDateTime)))
-        .toList();
+    List<Transaction> filteredTransactions =
+        transactions.stream()
+            .filter(
+                transaction ->
+                    transaction.getTransactionDate().after(Timestamp.valueOf(startDateTime))
+                        && transaction.getTransactionDate().before(Timestamp.valueOf(endDateTime)))
+            .toList();
 
     Map<String, BigDecimal> categorySumMap = initializeCategoryMap(categories);
 

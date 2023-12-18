@@ -1,7 +1,6 @@
 package com.walletbyhei.model.mapper;
 
 import com.walletbyhei.model.CategorySum;
-
 import java.math.BigDecimal;
 import java.util.Map;
 
