@@ -2,7 +2,7 @@ package com.walletbyhei.repository.crudOperationsImpl;
 
 import com.walletbyhei.database.ConnectionToDb;
 import com.walletbyhei.model.Category;
-import com.walletbyhei.model.type.TransactionType;
+import com.walletbyhei.model.type.CategoryType;
 import com.walletbyhei.repository.CrudOperations;
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,15 +13,15 @@ import java.util.stream.Collectors;
 public class CategoryRepository implements CrudOperations<Category> {
   private static final String CATEGORY_ID_COLUMN = "category_id";
   private static final String CATEGORY_NAME_COLUMN = "category_name";
-  private static final String TRANSACTION_TYPE_COLUMN = "transaction_type";
+  private static final String CATEGORY_TYPE_COLUMN = "category_type";
 
   private static final String SELECT_BY_ID_QUERY = "SELECT * FROM category WHERE category_id = ?";
   private static final String SELECT_ALL_QUERY = "SELECT * FROM category";
   private static final String INSERT_QUERY =
-      "INSERT INTO category (category_name, transaction_type) VALUES (?, CAST(? AS"
-          + " transaction_type)) RETURNING *";
+      "INSERT INTO category (category_name, category_type) VALUES (?, CAST(? AS"
+          + " category_type)) RETURNING *";
   private static final String UPDATE_QUERY =
-      "UPDATE category SET category_name = ?, transaction_type = CAST(? AS transaction_type)"
+      "UPDATE category SET category_name = ?, category_type = CAST(? AS category_type)"
           + " WHERE category_id = ? RETURNING *";
   private static final String DELETE_QUERY = "DELETE FROM category WHERE category_id = ?";
 
@@ -69,8 +69,7 @@ public class CategoryRepository implements CrudOperations<Category> {
         Category category = new Category();
         category.setCategoryId(resultSet.getLong(CATEGORY_ID_COLUMN));
         category.setCategoryName(resultSet.getString(CATEGORY_NAME_COLUMN));
-        category.setTransactionType(
-            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+        category.setCategoryType(CategoryType.valueOf(resultSet.getString(CATEGORY_TYPE_COLUMN)));
 
         categories.add(category);
       }
@@ -106,12 +105,12 @@ public class CategoryRepository implements CrudOperations<Category> {
         QUERY = INSERT_QUERY;
         statement = connection.prepareStatement(QUERY, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, toSave.getCategoryName());
-        statement.setString(2, String.valueOf(toSave.getTransactionType()));
+        statement.setString(2, String.valueOf(toSave.getCategoryType()));
       } else {
         QUERY = UPDATE_QUERY;
         statement = connection.prepareStatement(QUERY);
         statement.setString(1, toSave.getCategoryName());
-        statement.setString(2, String.valueOf(toSave.getTransactionType()));
+        statement.setString(2, String.valueOf(toSave.getCategoryType()));
         statement.setLong(4, toSave.getCategoryId());
       }
 
@@ -123,8 +122,8 @@ public class CategoryRepository implements CrudOperations<Category> {
         if (resultSet.next()) {
           Category savedCategory = new Category();
           savedCategory.setCategoryName(resultSet.getString(CATEGORY_NAME_COLUMN));
-          savedCategory.setTransactionType(
-              TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+          savedCategory.setCategoryType(
+              CategoryType.valueOf(resultSet.getString(CATEGORY_TYPE_COLUMN)));
 
           return savedCategory;
         }
