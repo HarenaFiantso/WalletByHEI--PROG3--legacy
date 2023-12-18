@@ -3,11 +3,15 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.51">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-<<<<<<< HEAD
-      <IntrospectionStateNumber>885</IntrospectionStateNumber>
-=======
-      <IntrospectionStateNumber>883</IntrospectionStateNumber>
->>>>>>> a503800 (fix: Review category table)
+      <Grants>1||-9223372036854775808|c|G
+1||10|c|G
+1||10|C|G
+1||10|T|G
+13796||-9223372036854775808|c|G
+13796||10|c|G
+13796||10|C|G
+13796||10|T|G</Grants>
+      <IntrospectionStateNumber>886</IntrospectionStateNumber>
       <ServerVersion>14.10</ServerVersion>
       <StartupTime>1702730568</StartupTime>
       <TimeZones>true ACDT
@@ -1413,11 +1417,7 @@ false posixrules
 13431||10|C|G
 13431||-9223372036854775808|U|G
 13431||10|U|G</Grants>
-<<<<<<< HEAD
-      <IntrospectionStateNumber>885</IntrospectionStateNumber>
-=======
-      <IntrospectionStateNumber>883</IntrospectionStateNumber>
->>>>>>> a503800 (fix: Review category table)
+      <IntrospectionStateNumber>886</IntrospectionStateNumber>
       <ObjectId>25158</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4842,13 +4842,8 @@ false posixrules
     <schema id="263" parent="4" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-<<<<<<< HEAD
-      <IntrospectionStateNumber>885</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2023-12-18.01:43:26</LastIntrospectionLocalTimestamp>
-=======
-      <IntrospectionStateNumber>883</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2023-12-18.01:25:26</LastIntrospectionLocalTimestamp>
->>>>>>> a503800 (fix: Review category table)
+      <IntrospectionStateNumber>886</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2023-12-18.01:46:17</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>526</StateNumber>
       <OwnerName>postgres</OwnerName>
