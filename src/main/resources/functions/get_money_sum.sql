@@ -1,5 +1,5 @@
 -- Create a function to get the sum of money
-CREATE OR REPLACE FUNCTION calculateMoneySum(
+CREATE OR REPLACE FUNCTION get_money_sum(
     account_id_param INT,
     start_date_time TIMESTAMP,
     end_date_time TIMESTAMP
