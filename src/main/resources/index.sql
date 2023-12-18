@@ -45,14 +45,17 @@ CREATE TABLE IF NOT EXISTS balance
     FOREIGN KEY (account_id) REFERENCES account (account_id)
 );
 
--- Creating tables transaction & category and type
-CREATE TYPE transaction_type AS ENUM ('CREDIT', 'DEBIT');
+-- Creating table category
+CREATE TYPE category_type AS ENUM ('INCOME', 'EXPENSE');
 CREATE TABLE IF NOT EXISTS category
 (
     category_id   SERIAL PRIMARY KEY,
-    category_name VARCHAR(255) NOT NULL,
-    display_name  VARCHAR(255)
+    category_name VARCHAR(255) UNIQUE NOT NULL,
+    category_type category_type       NOT NULL
 );
+
+-- Creating tables transaction & category and type
+CREATE TYPE transaction_type AS ENUM ('CREDIT', 'DEBIT');
 CREATE TABLE IF NOT EXISTS transaction
 (
     transaction_id   SERIAL PRIMARY KEY,
