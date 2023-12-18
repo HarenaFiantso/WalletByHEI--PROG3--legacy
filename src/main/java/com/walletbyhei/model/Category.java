@@ -1,6 +1,6 @@
 package com.walletbyhei.model;
 
-import com.walletbyhei.model.type.TransactionType;
+import com.walletbyhei.model.type.CategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class Category {
   private Long categoryId;
   private String categoryName;
-  private TransactionType transactionType;
+  private CategoryType categoryType;
 }
