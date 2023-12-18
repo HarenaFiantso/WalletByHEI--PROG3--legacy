@@ -19,7 +19,7 @@ BEGIN
         FROM category c
                  LEFT JOIN
              "transaction" t
-             ON c.category_id = t.category_id AND t.transaction_date_time BETWEEN p_start_date AND p_end_date AND
+             ON c.category_id = t.category_id AND t.transaction_date BETWEEN p_start_date AND p_end_date AND
                 t.account_id = p_account_id
         GROUP BY c.category_name;
 END;
