@@ -35,6 +35,8 @@ public class TransactionRepository implements CrudOperations<Transaction> {
   /* ===== Additional Query(ies) ===== */
   private static final String SELECT_TRANSFERS_BETWEEN_ACCOUNTS =
       "SELECT * FROM transaction WHERE account_id = ? OR account_id = ?";
+  private static final String SELECT_BY_ACCOUNT_ID =
+      "SELECT * FROM transaction WHERE account_id = ?";
 
   @Override
   public Transaction findById(Long toFind) {
@@ -230,6 +232,39 @@ public class TransactionRepository implements CrudOperations<Transaction> {
       throw new RuntimeException(e);
     } finally {
       closeResources(connection, statement, resultSet);
+    }
+
+    return transactions;
+  }
+
+  public List<Transaction> findByIdAccount(String accountId) {
+    List<Transaction> transactions = new ArrayList<>();
+    Connection connection = ConnectionToDb.getConnection();
+
+    try {
+      PreparedStatement statement = connection.prepareStatement(SELECT_BY_ACCOUNT_ID);
+
+      statement.setString(1, accountId);
+
+      ResultSet resultSet = statement.executeQuery();
+
+      while (resultSet.next()) {
+        Transaction transaction = new Transaction();
+        transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
+        transaction.setTransactionDate(
+            Timestamp.valueOf(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN).toLocalDateTime()));
+        transaction.setTransactionType(
+            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+        transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
+        transaction.setReason(resultSet.getString(REASON_COLUMN));
+        transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
+        transaction.setCategoryId(resultSet.getInt(CATEGORY_ID_COLUMN));
+
+        transactions.add(transaction);
+      }
+
+    } catch (SQLException e) {
+      throw new RuntimeException(e.getMessage());
     }
 
     return transactions;
