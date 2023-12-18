@@ -5,6 +5,8 @@ import com.walletbyhei.model.CurrencyValue;
 import com.walletbyhei.model.Transaction;
 import com.walletbyhei.repository.crudOperationsImpl.CurrencyValueRepository;
 import com.walletbyhei.repository.crudOperationsImpl.TransactionRepository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 
@@ -14,7 +16,7 @@ public class BalanceService {
   private final CurrencyValueRepository currencyValueRepository;
 
   /* TODO: Create a function to transfer money between two accounts (second case | Second part) */
-  public Double calculateAriaryBalance(Account euroAccount, Account ariaryAccount) {
+  public Double calculateAriaryBalance(Account euroAccount, Account ariaryAccount, LocalDateTime dateTime) {
     List<Transaction> euroToAriaryTransfers =
         transactionRepository.findTransfersBetweenAccounts(euroAccount, ariaryAccount);
 

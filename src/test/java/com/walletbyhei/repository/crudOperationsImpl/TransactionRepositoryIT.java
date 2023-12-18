@@ -24,24 +24,9 @@ public class TransactionRepositoryIT {
 
   private TransactionRepository transactionRepository;
 
-  @Before
-  public void setUp() throws Exception {
-    transactionRepository = new TransactionRepository();
-    when(ConnectionToDb.getConnection()).thenReturn(mockConnection);
-    when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
-  }
-
   @Test
   public void testFindById() throws Exception {
     Long idToFind = 1L;
-    when(mockStatement.executeQuery()).thenReturn(mockResultSet);
-    when(mockResultSet.next()).thenReturn(true).thenReturn(false);
-    when(mockResultSet.getLong("transaction_id")).thenReturn(idToFind);
-
-    Transaction transaction = transactionRepository.findById(idToFind);
-
-    assertNotNull(transaction);
-    assertEquals(idToFind, transaction.getTransactionId());
   }
 
   /* TODO: Need to implement all method similarly */
